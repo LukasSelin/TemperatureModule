@@ -1,0 +1,76 @@
+﻿@using TemperatureModuleDatasource;
+@using System.Linq;
+@using System.Threading;
+
+@page "/"
+<h3>Temperature Readings</h3>
+<select id="RangeFilter" @bind="selectedFilter">
+    <option selected="selected" value="Today">Today</option>
+    <option value="Yesterday">Yesterday</option>
+    <option value="3 days">3 days</option>
+    <option value="1 week">1 week</option>
+</select>
+<h3>@if (selectedFilter == "Today") { DateTime.Now.ToShortDateString(); }</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date</th>   
+            <th>Temp. (C)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var temperatureReading in temperatureReadings)
+        {
+            @for (int i = 1; i <= temperatureReading.UnitDataPT.Count; i++)
+            {
+                TempraturModul.Models.UnitData unitData = temperatureReading.UnitDataPT[temperatureReading.UnitDataPT.Count - i];
+                <tr>
+                    <td>
+                        @unitData.DataDateTime.ToShortDateString() @unitData.DataDateTime.ToShortTimeString()
+                    </td>
+                    <td>@unitData.DataPTValue</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+@code {
+    List<TempraturModul.Models.TempratureDTO> temperatureReadings = new List<TempraturModul.Models.TempratureDTO>();
+    string selectedFilter { get; set; } = "Today";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var data = new Datasource();
+        temperatureReadings = (await data.GetDayAsync(DateTime.Now)).ToList();
+
+        UpdateList();
+    }
+
+    async Task UpdateList()
+    {
+        var timer = new Timer(new TimerCallback(_ =>
+        {
+            InvokeAsync(() =>
+            {
+                StateHasChanged();
+                System.Diagnostics.Debug.WriteLine("Updates list of temperatures,   at time: " + DateTime.Now.ToString("HH:mm:ss"));
+                System.Diagnostics.Debug.WriteLine("Number of records: " + temperatureReadings.Count);
+
+            });
+        }), null, 0, 300000); // Update every 5 minutes
+    }
+
+    public class TemperatureReading
+    {
+        public float temperature { get; set; }
+        public DateTime dateTime { get; set; }
+    }
+
+    private void IncrementCount()
+    {
+
+    }
+}

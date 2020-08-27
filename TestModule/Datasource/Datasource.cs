@@ -8,7 +8,7 @@ namespace TemperatureModuleDatasource
 {
     public class Datasource
     {
-        public async Task<IEnumerable<TempratureDTO>> GetAll()
+        public async Task<IEnumerable<TempratureDTO>> GetAllAsync()
         {
             var inputs = new API_Inputs()
             {
@@ -20,7 +20,7 @@ namespace TemperatureModuleDatasource
             return temperatures;
         }
 
-        public async Task<TempratureDTO> GetLatestTemperature()
+        public async Task<TempratureDTO> GetLatestTemperatureAsync()
         {
             var inputs = new API_Inputs()
             {
@@ -31,7 +31,7 @@ namespace TemperatureModuleDatasource
             return temperatures;
         }
 
-        public async Task<IEnumerable<TempratureDTO>> GetDay(DateTime date)
+        public async Task<IEnumerable<TempratureDTO>> GetDayAsync(DateTime date)
         {
             var inputs = new API_Inputs()
             {
@@ -42,7 +42,7 @@ namespace TemperatureModuleDatasource
             var temperatures = await DatasourceHelper.GetTemperaturesAsync(inputs);
             return temperatures;
         }
-        public async Task<IEnumerable<TempratureDTO>> GetWeek(DateTime date)
+        public async Task<IEnumerable<TempratureDTO>> GetWeekAsync(DateTime date)
         {
             int offsetDays;
             if(date.DayOfWeek != DayOfWeek.Sunday)
@@ -64,7 +64,7 @@ namespace TemperatureModuleDatasource
             return temperatures;
         }
         
-        public async Task<IEnumerable<TempratureDTO>> GetMonth(DateTime date)
+        public async Task<IEnumerable<TempratureDTO>> GetMonthAsync(DateTime date)
         {
             var inputs = new API_Inputs()
             {

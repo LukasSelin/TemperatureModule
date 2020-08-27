@@ -3,14 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Temprature_Datasource", "TempraturModul\Temprature_Datasource.csproj", "{96549B5A-DFE1-42CE-B929-D2C5FD5FDBFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TemperatureModuleDatasource", "TempraturModul\TemperatureModuleDatasource.csproj", "{96549B5A-DFE1-42CE-B929-D2C5FD5FDBFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TempratureTest", "TempratureTest\TempratureTest.csproj", "{CAB8434A-EACF-4174-8060-43C47ADE73C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TemperatureTest", "TempratureTest\TemperatureTest.csproj", "{CAB8434A-EACF-4174-8060-43C47ADE73C2}"
 	ProjectSection(ProjectDependencies) = postProject
 		{96549B5A-DFE1-42CE-B929-D2C5FD5FDBFA} = {96549B5A-DFE1-42CE-B929-D2C5FD5FDBFA}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TempratureModuleWeb", "TempratureModuleWeb\TempratureModuleWeb.csproj", "{E86B5DC8-DED8-4E29-B68F-FB2211C439BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureModule.Webpage", "Temperature_Webmodule\TemperatureModule.Webpage.csproj", "{4A494A33-3148-471B-9849-A7B18093AC06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestModule", "TestModule\TestModule.csproj", "{F8420317-8B2F-4DC5-A568-3C82711CB282}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,10 +28,14 @@ Global
 		{CAB8434A-EACF-4174-8060-43C47ADE73C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAB8434A-EACF-4174-8060-43C47ADE73C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAB8434A-EACF-4174-8060-43C47ADE73C2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E86B5DC8-DED8-4E29-B68F-FB2211C439BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E86B5DC8-DED8-4E29-B68F-FB2211C439BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E86B5DC8-DED8-4E29-B68F-FB2211C439BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E86B5DC8-DED8-4E29-B68F-FB2211C439BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A494A33-3148-471B-9849-A7B18093AC06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A494A33-3148-471B-9849-A7B18093AC06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A494A33-3148-471B-9849-A7B18093AC06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A494A33-3148-471B-9849-A7B18093AC06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8420317-8B2F-4DC5-A568-3C82711CB282}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8420317-8B2F-4DC5-A568-3C82711CB282}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8420317-8B2F-4DC5-A568-3C82711CB282}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8420317-8B2F-4DC5-A568-3C82711CB282}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
