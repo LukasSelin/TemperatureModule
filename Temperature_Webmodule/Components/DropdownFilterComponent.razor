@@ -1,0 +1,19 @@
+﻿<Dropdown TItem="string" OnSelected="@OnSelected">
+    <InitialTip>@list[0]</InitialTip>
+    <ChildContent>
+        @foreach(var label in list)
+        {
+            <DropdownListItem Item="@label">@label</DropdownListItem>
+        }
+        @*<div class="dropdown-divider"></div>*@
+    </ChildContent>
+</Dropdown>
+
+@code {
+    List<string> list = new List<string> { "Today", "Yesterday", "1 day", "3 days", "1 week", "2 weeks", "1 month", "3 months", "1 year" }; 
+
+    private void OnSelected(string selection)
+    {
+        Console.WriteLine(selection);
+    }
+}

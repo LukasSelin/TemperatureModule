@@ -11,6 +11,8 @@
 @using Newtonsoft.Json.Linq;
 @using System.Linq
 @using TemperatureModuleDatasource
+
+@using TemperatureModule.Webpage.Components 
 @inject IJSRuntime JsRuntime
 
 <head>
@@ -40,23 +42,13 @@
         </div>
     </nav>
     <div>
-        <div class="graph-controllpanel" style="padding-left: 0px;">
-            <h1 style="color: #f4f7f5;">Temperature Readings</h1><input class="form-control-lg order-6" type="date" style="background-color: #08090a;color: #f4f7f5;border-color: #08090a;text-align: right;padding-right: 0px;" value="2020-08-28">
-            <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button" style="background-color: #222823;border-color: #222823;color: #f4f7f5;">Today</button>
-                <div class="dropdown-menu" role="menu">
-                    <a class="dropdown-item" role="presentation" href="#">Yesterday</a><a class="dropdown-item" role="presentation" href="#">1 day</a><a class="dropdown-item" role="presentation" href="#">3 days</a><a class="dropdown-item" role="presentation"
-                                                                                                                                                                                                                         href="#">1 week</a><a class="dropdown-item" role="presentation" href="#">2 weeks</a><a class="dropdown-item" role="presentation" href="#">1 month</a><a class="dropdown-item" role="presentation" href="#">3 months</a><a class="dropdown-item"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                   role="presentation" href="#">1 year</a>
-                </div>
-            </div>
-        </div>
+        <GraphControllPanelComponent></GraphControllPanelComponent>
+       
         <div class="carousel slide" data-ride="carousel" data-interval="false" id="carouselExampleIndicators" style="min-height: 75px;">
             <div class="carousel-inner" role="listbox" style="min-height: 100%;height: 100%;background-color: #1f2833;border-radius: 5px;">
                 <div class="carousel-item active">
                     <div class="d-block align-self-center center-block graph" style="color: rgb(255,255,255);background-color: #1f2833;min-height: 250px;height: 349px;">
-                        @*<canvas data-bs-chart="{&quot;type&quot;:&quot;line&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;09:00&quot;,&quot;09:10&quot;,&quot;09:20&quot;,&quot;09:30&quot;,&quot;09:40&quot;,&quot;09:50&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Temperature&quot;,&quot;backgroundColor&quot;:&quot;#575a5e&quot;,&quot;borderColor&quot;:&quot;#a7a2a9&quot;,&quot;data&quot;:[&quot;30.6&quot;,&quot;32.2&quot;,&quot;32.5&quot;,&quot;32.7&quot;,&quot;32.6&quot;,&quot;33.3&quot;],&quot;fill&quot;:true}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false},&quot;title&quot;:{&quot;text&quot;:&quot;&quot;,&quot;display&quot;:false},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#a7a2a9&quot;}}],&quot;yAxes&quot;:[{&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#a7a2a9&quot;}}]}}}"></canvas>*@
-                        <ChartJsLineChart @ref="_lineChartJs" Config="@_lineChartConfig"></ChartJsLineChart>
+                        <GraphComponent/>
                     </div>
                 </div>
                 <div class="carousel-item">
@@ -171,61 +163,11 @@
 </body>
 @functions
 {
-    private ChartJs.Blazor.ChartJS.LineChart.LineConfig _lineChartConfig;
-    private ChartJsLineChart _lineChartJs;
+    
 
     protected override async Task OnInitializedAsync()
     {
-        System.Diagnostics.Debug.WriteLine("Nu är vi här");
-        _lineChartConfig = new ChartJs.Blazor.ChartJS.LineChart.LineConfig()
-        {
-            Options = new ChartJs.Blazor.ChartJS.LineChart.LineOptions()
-            {
-                MaintainAspectRatio = false,
-                Responsive = true,
-                Scales = new Scales
-                {
-                    xAxes = new List<CartesianAxis>
-                    {
-                        new TimeAxis
-                        {
-                            ScaleLabel = new ScaleLabel
-                            {
-                                LabelString = "Time"
-                            },
-                            Position = Position.Bottom,
-                            Time = new ChartJs.Blazor.ChartJS.Common.Time.TimeOptions
-                            {
-                                DisplayFormats = ChartJs.Blazor.ChartJS.Common.Time.TimeDisplayFormats.DE_CH
-                            }
-                        }
-                    }
-                }
-            }
-        };
-        // _lineChartConfig.Data.Labels.AddRange(new[] { "09:00", "09:10", "09:20", "09:30", "09:40" });
-
-        var linechartSet = new ChartJs.Blazor.ChartJS.LineChart.LineDataset<ChartJs.Blazor.ChartJS.Common.Time.TimeTuple<double>>()
-        {
-            BackgroundColor = "#006dff",
-            BorderColor = "#006dff",
-            BorderWidth = 1,
-            Fill = false,
-            PointRadius = 2,
-            ShowLine = true
-        };
-
-        var data = new Datasource(new HttpClient());
-        var unitData = (await data.GetDayAsync(DateTime.Now)).ToList();
-
-        foreach (var dataPoint in unitData[0].UnitDataPT)
-        {
-            linechartSet.Add(new ChartJs.Blazor.ChartJS.Common.Time.TimeTuple<double>(
-                new ChartJs.Blazor.ChartJS.Common.Time.Moment(dataPoint.DataDateTime)
-                , dataPoint.DataPTValue));
-        }
-        System.Diagnostics.Debug.WriteLine("Adding n number of values to graph:" + linechartSet.Data.Count);
-        _lineChartConfig.Data.Datasets.Add(linechartSet);
+        
     }
 
 

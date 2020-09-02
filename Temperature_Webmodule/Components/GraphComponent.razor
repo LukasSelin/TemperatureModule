@@ -1,0 +1,85 @@
+﻿@using ChartJs.Blazor.Charts
+@using ChartJs.Blazor.ChartJS.Common.Enums
+@using ChartJs.Blazor.ChartJS.LineChart
+@using ChartJs.Blazor.ChartJS.Common.Axes
+@using ChartJs.Blazor.ChartJS.Common.Time
+@using System.Linq
+@using TemperatureModuleDatasource
+
+@using System.Diagnostics
+
+
+<ChartJsLineChart @ref="_lineChartJs" Config="@_lineChartConfig" Height="300"></ChartJsLineChart>
+
+@code {
+    private LineConfig _lineChartConfig;
+    private ChartJsLineChart _lineChartJs;
+
+    protected async override Task OnInitializedAsync()
+    {
+        _lineChartConfig = new LineConfig()
+        {
+            Options = new ChartJs.Blazor.ChartJS.LineChart.LineOptions()
+            {
+                MaintainAspectRatio = false,
+                Responsive = true,
+                Legend = new ChartJs.Blazor.ChartJS.Common.Handlers.Legend
+                {
+                    Display = false
+                },
+                Scales = new Scales
+                {
+                    xAxes = new List<CartesianAxis>
+            {
+                        new TimeAxis
+                        {
+                            ScaleLabel = new ScaleLabel
+                            {
+                                LabelString = "Time"
+                            },
+                            Position = Position.Bottom,
+                            Time = new ChartJs.Blazor.ChartJS.Common.Time.TimeOptions
+                            {
+                                DisplayFormats = ChartJs.Blazor.ChartJS.Common.Time.TimeDisplayFormats.DE_CH
+    }
+                        }
+                    },
+                    yAxes = new List<CartesianAxis>
+            {
+                        new LinearCartesianAxis
+                        {
+                            ScaleLabel = new ScaleLabel
+                            {
+                                LabelString = "Temp. °C"
+                            }
+
+                        }
+                    }
+                }
+            }
+        };
+
+        var linechartSet = new LineDataset<ChartJs.Blazor.ChartJS.Common.Time.TimeTuple<double>>()
+        {
+            BackgroundColor = "#006dff",
+            BorderColor = "#006dff",
+            BorderWidth = 2,
+            Fill = false,
+            PointRadius = 4,
+            ShowLine = true
+        };
+
+        var data = new Datasource(new HttpClient());
+        var unitData = (await data.GetDayAsync(DateTime.Now)).ToList();
+
+        foreach (var dataPoint in unitData[0].UnitDataPT)
+        {
+            linechartSet.Add(new TimeTuple<double>(
+                new Moment(dataPoint.DataDateTime)
+                , dataPoint.DataPTValue));
+        }
+
+        Debug.WriteLine("Adding n number of values to graph:" + linechartSet.Data.Count);
+        _lineChartConfig.Data.Datasets.Add(linechartSet);
+    }
+}
