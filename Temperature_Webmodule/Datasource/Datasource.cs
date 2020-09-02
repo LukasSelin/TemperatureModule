@@ -2,13 +2,21 @@
 using System.Collections.Generic;
 using TempraturModul.Models;
 using System.Threading.Tasks;
-using TemperatureModule.Datasource.Helper;
+using TemperatureModuleDatasourceHelper;
+using TemperatureModule.Webpage.Datasource;
+using System.Net.Http;
 
 namespace TemperatureModuleDatasource
 {
-    public class Datasource
+    public class Datasource : IDataService
     {
-        public async Task<IEnumerable<TempratureDTO>> GetAll()
+        private readonly DatasourceHelper helper;
+
+        public Datasource(HttpClient httpClient)
+        {
+            helper = new DatasourceHelper(httpClient);
+        }
+        public async Task<IEnumerable<TempratureDTO>> GetAllAsync()
         {
             var inputs = new API_Inputs()
             {
@@ -16,22 +24,22 @@ namespace TemperatureModuleDatasource
                 StopDate = DateTime.Now
             };
 
-            var temperatures = await DatasourceHelper.GetTemperaturesAsync(inputs);
+            var temperatures = await helper.GetTemperaturesAsync(inputs);
             return temperatures;
         }
 
-        public async Task<TempratureDTO> GetLatestTemperature()
+        public async Task<TempratureDTO> GetLatestTemperatureAsync()
         {
             var inputs = new API_Inputs()
             {
                 LastValue = true
             };
 
-            var temperatures = await DatasourceHelper.GetTemperatureAsync(inputs);
+            var temperatures = await helper.GetTemperatureAsync(inputs);
             return temperatures;
         }
 
-        public async Task<IEnumerable<TempratureDTO>> GetDay(DateTime date)
+        public async Task<IEnumerable<TempratureDTO>> GetDayAsync(DateTime date)
         {
             var inputs = new API_Inputs()
             {
@@ -39,10 +47,10 @@ namespace TemperatureModuleDatasource
                 StopDate = date.AddDays(1)
             };
 
-            var temperatures = await DatasourceHelper.GetTemperaturesAsync(inputs);
+            var temperatures = await helper.GetTemperaturesAsync(inputs);
             return temperatures;
         }
-        public async Task<IEnumerable<TempratureDTO>> GetWeek(DateTime date)
+        public async Task<IEnumerable<TempratureDTO>> GetWeekAsync(DateTime date)
         {
             int offsetDays;
             if(date.DayOfWeek != DayOfWeek.Sunday)
@@ -60,11 +68,11 @@ namespace TemperatureModuleDatasource
                 StopDate = date.AddDays(7)
             };
 
-            var temperatures = await DatasourceHelper.GetTemperaturesAsync(inputs);
+            var temperatures = await helper.GetTemperaturesAsync(inputs);
             return temperatures;
         }
         
-        public async Task<IEnumerable<TempratureDTO>> GetMonth(DateTime date)
+        public async Task<IEnumerable<TempratureDTO>> GetMonthAsync(DateTime date)
         {
             var inputs = new API_Inputs()
             {
@@ -72,7 +80,7 @@ namespace TemperatureModuleDatasource
                 StopDate = date.AddDays(DateTime.DaysInMonth(date.Year, date.Month))
             };
 
-            var temperatures = await DatasourceHelper.GetTemperaturesAsync(inputs);
+            var temperatures = await helper.GetTemperaturesAsync(inputs);
             return temperatures;
         }
     }

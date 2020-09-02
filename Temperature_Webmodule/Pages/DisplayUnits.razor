@@ -31,8 +31,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var data = new Datasource();
-        temperatureReadings = (await data.GetDay(DateTime.Now)).ToList();
+        var data = new Datasource(new HttpClient());
+        temperatureReadings = (await data.GetDayAsync(DateTime.Now)).ToList();
     }
 
     public class TemperatureReading
