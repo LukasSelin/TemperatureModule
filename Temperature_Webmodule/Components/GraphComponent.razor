@@ -8,8 +8,9 @@
 
 @using System.Diagnostics
 
-
-<ChartJsLineChart @ref="_lineChartJs" Config="@_lineChartConfig" Height="300"></ChartJsLineChart>
+<div class="d-block align-self-center center-block graph" style="min-height: 250px;height: 349px;">
+    <ChartJsLineChart @ref="_lineChartJs" Config="@_lineChartConfig" Height="300"></ChartJsLineChart>
+</div>
 
 @code {
     private LineConfig _lineChartConfig;
@@ -30,7 +31,7 @@
                 Scales = new Scales
                 {
                     xAxes = new List<CartesianAxis>
-            {
+                {
                         new TimeAxis
                         {
                             ScaleLabel = new ScaleLabel
@@ -41,11 +42,11 @@
                             Time = new ChartJs.Blazor.ChartJS.Common.Time.TimeOptions
                             {
                                 DisplayFormats = ChartJs.Blazor.ChartJS.Common.Time.TimeDisplayFormats.DE_CH
-    }
+                            }
                         }
                     },
                     yAxes = new List<CartesianAxis>
-            {
+                {
                         new LinearCartesianAxis
                         {
                             ScaleLabel = new ScaleLabel
