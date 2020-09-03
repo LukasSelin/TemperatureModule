@@ -13,6 +13,9 @@
 </div>
 
 @code {
+    [Parameter]
+    public TempraturModul.Models.TempratureDTO[] unitData { get; set; }
+
     private LineConfig _lineChartConfig;
     private ChartJsLineChart _lineChartJs;
 
@@ -59,7 +62,11 @@
                 }
             }
         };
+    }
 
+
+    protected override async Task OnParametersSetAsync()
+    {
         var linechartSet = new LineDataset<ChartJs.Blazor.ChartJS.Common.Time.TimeTuple<double>>()
         {
             BackgroundColor = "#006dff",
@@ -70,17 +77,17 @@
             ShowLine = true
         };
 
-        var data = new Datasource(new HttpClient());
-        var unitData = (await data.GetDayAsync(DateTime.Now)).ToList();
-
-        foreach (var dataPoint in unitData[0].UnitDataPT)
+        if (unitData != null)
         {
-            linechartSet.Add(new TimeTuple<double>(
-                new Moment(dataPoint.DataDateTime)
-                , dataPoint.DataPTValue));
-        }
+            foreach (var dataPoint in unitData[0].UnitDataPT)
+            {
+                linechartSet.Add(new TimeTuple<double>(
+                    new Moment(dataPoint.DataDateTime)
+                    , dataPoint.DataPTValue));
+            }
 
-        Debug.WriteLine("Adding n number of values to graph:" + linechartSet.Data.Count);
-        _lineChartConfig.Data.Datasets.Add(linechartSet);
+            Debug.WriteLine("Adding {0} values to the graph: ", linechartSet.Data.Count);
+            _lineChartConfig.Data.Datasets.Add(linechartSet);
+        }
     }
 }
