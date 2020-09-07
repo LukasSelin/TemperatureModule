@@ -1,4 +1,4 @@
-﻿@using  TempraturModul.Models
+﻿@using TemperatureModule.Webpage.Models
 
 @if (unitData != null)
 {
@@ -34,9 +34,9 @@ else
 
 @code {
     [CascadingParameter]
-    public TempraturModul.Models.TempratureDTO[] unitData { get; set; }
+    public UnitData[] unitData { get; set; }
 
-    private Dictionary<string, TempraturModul.Models.UnitData> keyValues = new Dictionary<string, TempraturModul.Models.UnitData>();
+    private Dictionary<string, UnitData> keyValues = new Dictionary<string, UnitData>();
 
     protected override async Task OnParametersSetAsync()
     {
@@ -45,16 +45,16 @@ else
             keyValues.Clear();
             double allTemp = 0;
 
-            foreach (var unit in unitData[0].UnitDataPT)
+            foreach (var unit in unitData)
             {
                 allTemp += unit.DataPTValue;
             }
-            var todayAverage = Math.Round(allTemp / unitData[0].UnitDataPT.Count, 1);
+            var todayAverage = Math.Round(allTemp / unitData.Length, 1);
 
-            var highestRecord = GetHighestRecord(unitData[0].UnitDataPT);
-            var lowestRecord = GetLowestRecord(unitData[0].UnitDataPT);
+            var highestRecord = GetHighestRecord(unitData);
+            var lowestRecord = GetLowestRecord(unitData);
 
-            keyValues.Add("Latest Temperature", unitData[0].UnitDataPT.Last());
+            keyValues.Add("Latest Temperature", unitData.Last());
             keyValues.Add("Highest temperature", highestRecord);
             keyValues.Add("Lowest temperature", lowestRecord);
 
@@ -66,7 +66,7 @@ else
         }
     }
 
-    private UnitData GetHighestRecord(List<UnitData> units)
+    private UnitData GetHighestRecord(UnitData[] units)
     {
         var data = units.Max(i => i.DataPTValue);
         var unit = units.Where(i => i.DataPTValue == data).ToArray();
@@ -74,7 +74,7 @@ else
         return unit[0];
     }
 
-    private UnitData GetLowestRecord(List<UnitData> units)
+    private UnitData GetLowestRecord(UnitData[] units)
     {
         var data = units.Min(i => i.DataPTValue);
         var unit = units.Where(i => i.DataPTValue == data).ToArray();

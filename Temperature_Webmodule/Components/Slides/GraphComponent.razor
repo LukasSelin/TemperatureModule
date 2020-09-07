@@ -5,6 +5,7 @@
 @using ChartJs.Blazor.ChartJS.Common.Time
 @using System.Linq
 @using TemperatureModuleDatasource
+@using TemperatureModule.Webpage.Models
 
 @using System.Diagnostics
 
@@ -14,7 +15,7 @@
 
 @code {
     [CascadingParameter]
-    public TempraturModul.Models.TempratureDTO[] unitData { get; set; }
+    public UnitData[] unitData { get; set; }
 
     private LineConfig _lineChartConfig;
     private ChartJsLineChart _lineChartJs;
@@ -73,13 +74,13 @@
             BorderColor = "#f3ff00",
             BorderWidth = 2,
             Fill = false,
-            PointRadius = 2,
+            PointRadius = 0,
             ShowLine = true
         };
 
         if (unitData != null)
         {
-            foreach (var dataPoint in unitData[0].UnitDataPT)
+            foreach (var dataPoint in unitData)
             {
                 linechartSet.Add(new TimeTuple<double>(
                     new Moment(dataPoint.DataDateTime)

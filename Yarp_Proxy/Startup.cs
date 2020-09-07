@@ -45,7 +45,7 @@ namespace Yarp_Proxy
 
             app.UseRouting();
 
-            app.UseCors();
+            app.UseCors("CustomCors");
 
 
             app.UseEndpoints(endpoints =>

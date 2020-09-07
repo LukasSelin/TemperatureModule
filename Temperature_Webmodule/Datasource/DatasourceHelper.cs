@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using TemperatureModule.Webpage.Datasource;
-using TempraturModul.Models;
+using TemperatureModule.Webpage.Models;
 
 namespace TemperatureModuleDatasourceHelper
 {

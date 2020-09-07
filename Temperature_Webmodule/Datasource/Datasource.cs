@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TempraturModul.Models;
+using TemperatureModule.Webpage.Models;
 using System.Threading.Tasks;
 using TemperatureModuleDatasourceHelper;
 using TemperatureModule.Webpage.Datasource;

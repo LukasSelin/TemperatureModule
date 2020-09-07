@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TempraturModul.Models
+namespace TemperatureModule.Webpage.Models
 {
     public class UnitData
     {

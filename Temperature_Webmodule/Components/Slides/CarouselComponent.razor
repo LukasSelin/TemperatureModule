@@ -1,5 +1,6 @@
 ﻿@using TemperatureModuleDatasource
 @using System.Diagnostics
+@using TemperatureModule.Webpage.Models
 
 @inject IJSRuntime JsRuntime
 
@@ -7,10 +8,10 @@
     <div class="carousel-inner" role="listbox" style="background-color: #1f2833;border-radius: 5px;">
         <CascadingValue Value="UnitData">
             <div class="carousel-item active">
-                <GraphComponent/>
+                <TableViewComponent ></TableViewComponent>
             </div>
             <div class="carousel-item">
-                <TableViewComponent ></TableViewComponent>
+                <GraphComponent/>
             </div>
             <div class="carousel-item">
                 <LatestTemperatureViewComponent ></LatestTemperatureViewComponent>
@@ -30,10 +31,9 @@
 
 @code {
     [Parameter]
-    public TempraturModul.Models.TempratureDTO[] UnitData { get; set; }
+    public UnitData[] UnitData { get; set; }
 
     bool firstRender = true;
-
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
