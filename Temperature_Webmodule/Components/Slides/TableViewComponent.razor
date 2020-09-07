@@ -52,18 +52,19 @@
 
     public bool ReloadList { get; set; }
 
-    protected override void OnInitialized()
+    protected async override Task OnParametersSetAsync()
     {
-        PageSize = 5;
+        PageSize = 10;
+        System.Diagnostics.Debug.WriteLine("number of units");
 
-        if(unitData != null)
+        if (unitData != null)
         {
 
-        Items = unitData.ToList();
-        ItemList = Items.Take(PageSize).ToList();
-        System.Diagnostics.Debug.WriteLine("{0} number of units", Items.Count);
-        TotalPages = (int)Math.Ceiling(Items.Count() / (decimal)PageSize);
-        System.Diagnostics.Debug.WriteLine("{0} total pages", TotalPages);
+            Items = unitData.Reverse().ToList();
+            ItemList = Items.Take(PageSize).Reverse().ToList();
+            System.Diagnostics.Debug.WriteLine("{0} number of units", Items.Count);
+            TotalPages = (int)Math.Ceiling(Items.Count() / (decimal)PageSize);
+            System.Diagnostics.Debug.WriteLine("{0} total pages", TotalPages);
         }
 
 
@@ -88,7 +89,7 @@
         if (Items != null)
         {
             //pageNumber * pageSize -> take 5
-            ItemList = Items.Skip(pageNumber * PageSize).Take(PageSize).ToList();
+            ItemList = Items.Skip(pageNumber * PageSize).Take(PageSize).Reverse().ToList();
             TotalPages = (int)Math.Ceiling(Items.Count() / (decimal)PageSize);
             CurrentPage = pageNumber;
         }

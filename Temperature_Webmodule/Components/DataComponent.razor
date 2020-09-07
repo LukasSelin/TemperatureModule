@@ -105,6 +105,8 @@
             var data = new Datasource(new HttpClient());
             var unitWithData = (await data.GetDayAsync(DateTime.Now)).ToArray();
             UnitData = unitWithData[0].UnitDataPT.ToArray();
+            System.Diagnostics.Debug.WriteLine("Number of records from API: {0}", UnitData.Length);
+
             StartDate = DateTime.Today;
         }
         catch
