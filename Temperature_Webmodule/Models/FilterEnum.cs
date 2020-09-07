@@ -15,6 +15,7 @@ namespace TemperatureModule.Webpage.Models
         TwoWeeks,
         OneMonth,
         ThreeMonths,
-        OneYear
+        OneYear,
+        CustomDate
     }
 }

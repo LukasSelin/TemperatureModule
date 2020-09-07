@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlazorDateRangePicker;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,6 +32,71 @@ namespace TemperatureModule.Webpage.HelpClasses
         {
             string[] numberLookup = new string[] { "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" };
             return numberLookup[number];
+        }
+
+        public static DateRange GetDateRange(FilterEnum selection)
+        {
+            DateRange dateRange = new DateRange();
+            switch (selection)
+            {
+                case FilterEnum.Today:
+                    var today = DateTime.Today;
+                    dateRange.Start = today;
+                    dateRange.End = today;
+                    break;
+
+                case FilterEnum.Yesterday:
+                    var yesterday = DateTime.Today.AddDays(-1);
+                    dateRange.Start = yesterday;
+                    dateRange.End = yesterday;
+
+                    break;
+
+                case FilterEnum.OneDay:
+                    break;
+
+                case FilterEnum.ThreeDays:
+                    var threedaySpan = DateTime.Today.AddDays(-3);
+                    dateRange.Start = threedaySpan;
+                    dateRange.End = DateTime.Today;
+                    break;
+
+                case FilterEnum.OneWeek:
+                    var oneWeekOffset = DateTime.Today.AddDays(-7);
+                    dateRange.Start = oneWeekOffset;
+                    dateRange.End = DateTime.Today;
+                    break;
+
+                case FilterEnum.TwoWeeks:
+                    var twoWeeksOffset = DateTime.Today.AddDays(-14);
+                    dateRange.Start = twoWeeksOffset;
+                    dateRange.End = DateTime.Today;
+                    break;
+
+                case FilterEnum.OneMonth:
+                    var oneMonthOffset = DateTime.Today.AddMonths(-1);
+                    dateRange.Start = oneMonthOffset;
+                    dateRange.End = DateTime.Today;
+                    break;
+
+                case FilterEnum.ThreeMonths:
+                    var threeMonthsOffset = DateTime.Today.AddMonths(-3);
+                    dateRange.Start = threeMonthsOffset;
+                    dateRange.End = DateTime.Today;
+                    break;
+
+                case FilterEnum.OneYear:
+                    var oneYearOffset = DateTime.Today.AddYears(-1);
+                    dateRange.Start = oneYearOffset;
+                    dateRange.End = DateTime.Today;
+                    break;
+
+                case FilterEnum.CustomDate:
+
+                    break;
+
+            }
+            return dateRange;
         }
     }
 }

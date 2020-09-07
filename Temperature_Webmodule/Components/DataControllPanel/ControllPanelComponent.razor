@@ -1,13 +1,16 @@
 ﻿@using TemperatureModule.Webpage.Models
 @using BlazorDateRangePicker
+@using TemperatureModule.Webpage.HelpClasses
+
+@using TemperatureModule.Webpage.Components.DataControllPanel.Dropdown
 
 <div class="graph-controllpanel" style="padding-left: 0px;">
     <h1 style="color: #f4f7f5;">Temperature Readings</h1>
-    
-    <DateRangePicker class="order-6" placeholder="@StartDate.GetValueOrDefault().DateTime.ToShortDateString()" 
+
+    <DateRangePicker class="order-6" placeholder="@StartDate.GetValueOrDefault().DateTime.ToShortDateString()"
                      ShowOnlyOneCalendar="true" SingleDatePicker="false" StartDate="StartDate" EndDate="EndDate" OnRangeSelect="OnDateSelected" />
-    
-    <DropdownFilterComponent SelectUpdated="OnSelected" />
+
+    <DropdownFilterComponent Tip="@dropdownTip" Filters="filterList" SelectUpdated="OnSelected" />
 </div>
 
 @code {
@@ -23,15 +26,29 @@
     [Parameter]
     public DateTimeOffset? EndDate { get; set; }
 
+    private List<string> filterList = new List<string> { "Today", "Yesterday", "1 day", "3 days", "1 week", "2 weeks", "1 month", "3 months", "1 year" };
+
+    private string dropdownTip { get; set; }
+
     public async Task OnSelected(FilterEnum selection)
     {
         await SelectUpdated.InvokeAsync(selection);
+        var range = FilterEnumHelper.GetDateRange(selection);
+        StartDate = range.Start;
+        EndDate = range.End;
     }
 
     public async Task OnDateSelected(DateRange range)
     {
         await DateUpdated.InvokeAsync(range);
+
+        dropdownTip = "Custom date";
         StartDate = range.Start;
         EndDate = range.End;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        dropdownTip = filterList[0];
     }
 }

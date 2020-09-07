@@ -1,0 +1,113 @@
+﻿@using System.Linq
+@using TemperatureModuleDatasource
+@using TemperatureModule.Webpage.Models
+
+@using TemperatureModule.Webpage.Components.DataControllPanel
+@using TemperatureModule.Webpage.Components.Slides
+
+
+<ControllPanelComponent DateUpdated="DateUpdated" SelectUpdated="@FilterUpdated" StartDate="StartDate" EndDate="EndDate" />
+<CarouselComponent UnitData="UnitData"></CarouselComponent>
+
+@code {
+    public TempraturModul.Models.TempratureDTO[] UnitData { get; set; }
+
+    public string Selection { get; set; } = "Today";
+
+    public DateTimeOffset? StartDate { get; set; }
+    public DateTimeOffset? EndDate { get; set; }
+
+    public async Task DateUpdated(BlazorDateRangePicker.DateRange dateRange)
+    {
+        var data = new Datasource(new HttpClient());
+        UnitData = (await data.GetDaysAsync(dateRange.Start.DateTime, dateRange.End.DateTime)).ToArray();
+    }
+
+    // Todo add more support for more filters
+    public async Task FilterUpdated(FilterEnum selection)
+    {
+        var data = new Datasource(new HttpClient());
+
+        switch (selection)
+        {
+            case FilterEnum.Today:
+                var today = DateTime.Today;
+                UnitData = (await data.GetDayAsync(today)).ToArray();
+                StartDate = today;
+                EndDate = today;
+                break;
+
+            case FilterEnum.Yesterday:
+                var yesterday = DateTime.Today.AddDays(-1);
+                UnitData = (await data.GetDayAsync(yesterday)).ToArray();
+                StartDate = yesterday;
+                EndDate = yesterday;
+
+                break;
+
+            case FilterEnum.OneDay:
+                break;
+
+            case FilterEnum.ThreeDays:
+                var threedaySpan = DateTime.Today.AddDays(-3);
+                UnitData = (await data.GetDaysAsync(threedaySpan, DateTime.Today)).ToArray();
+                StartDate = threedaySpan;
+                EndDate = DateTime.Today;
+                break;
+
+            case FilterEnum.OneWeek:
+                var oneWeekOffset = DateTime.Today.AddDays(-7);
+                UnitData = (await data.GetDaysAsync(oneWeekOffset, DateTime.Today)).ToArray();
+                //StartDate = oneWeekOffset;
+                //EndDate = DateTime.Today;
+                break;
+
+            case FilterEnum.TwoWeeks:
+                var twoWeeksOffset = DateTime.Today.AddDays(-14);
+                UnitData = (await data.GetDaysAsync(twoWeeksOffset, DateTime.Today)).ToArray();
+                StartDate = twoWeeksOffset;
+                EndDate = DateTime.Today;
+                break;
+
+            case FilterEnum.OneMonth:
+                var oneMonthOffset = DateTime.Today.AddMonths(-1);
+                UnitData = (await data.GetDaysAsync(oneMonthOffset, DateTime.Today)).ToArray();
+                StartDate = oneMonthOffset;
+                EndDate = DateTime.Today;
+                break;
+
+            case FilterEnum.ThreeMonths:
+                var threeMonthsOffset = DateTime.Today.AddMonths(-3);
+                UnitData = (await data.GetDaysAsync(threeMonthsOffset, DateTime.Today)).ToArray();
+                StartDate = threeMonthsOffset;
+                EndDate = DateTime.Today;
+                break;
+
+            case FilterEnum.OneYear:
+                var oneYearOffset = DateTime.Today.AddYears(-1);
+                UnitData = (await data.GetDaysAsync(oneYearOffset, DateTime.Today)).ToArray();
+                StartDate = oneYearOffset;
+                EndDate = DateTime.Today;
+                break;
+
+            case FilterEnum.CustomDate:
+
+                break;
+
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var data = new Datasource(new HttpClient());
+            UnitData = (await data.GetDayAsync(DateTime.Now)).ToArray();
+            StartDate = DateTime.Today;
+        }
+        catch
+        {
+            System.Diagnostics.Debug.WriteLine("Nu var vi här");
+        }
+    }
+}

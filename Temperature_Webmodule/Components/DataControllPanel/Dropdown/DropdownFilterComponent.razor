@@ -3,9 +3,9 @@
 
 
 <Dropdown TItem="string" OnSelected="@OnSelected">
-    <InitialTip>@list[0]</InitialTip>
+    <InitialTip>@Tip</InitialTip>
     <ChildContent>
-        @foreach (var label in list)
+        @foreach (var label in Filters)
         {
             <DropdownListItem Item="@label">@label</DropdownListItem>
         }
@@ -14,7 +14,11 @@
 </Dropdown>
 
 @code {
-    List<string> list = new List<string> { "Today", "Yesterday", "1 day", "3 days", "1 week", "2 weeks", "1 month", "3 months", "1 year" };
+    [Parameter]
+    public List<string> Filters { get; set; }
+
+    [Parameter]
+    public string Tip { get; set; }
 
     [Parameter]
     public EventCallback<FilterEnum> SelectUpdated { get; set; }
@@ -24,6 +28,5 @@
         var filterEnum = FilterEnumHelper.GetFilterEnum(selection);
 
         await SelectUpdated.InvokeAsync(filterEnum);
-
     }
 }
