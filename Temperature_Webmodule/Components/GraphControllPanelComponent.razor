@@ -3,11 +3,10 @@
 
 <div class="graph-controllpanel" style="padding-left: 0px;">
     <h1 style="color: #f4f7f5;">Temperature Readings</h1>
-    @if(StartDate != null)
-    {
-        <DateRangePicker class="order-6" placeholder="@StartDate.GetValueOrDefault().DateTime.ToShortDateString()" 
-                         ShowOnlyOneCalendar="true" SingleDatePicker="false" StartDate="StartDate" EndDate="EndDate" OnRangeSelect="OnDateSelected" />
-    }
+    
+    <DateRangePicker class="order-6" placeholder="@StartDate.GetValueOrDefault().DateTime.ToShortDateString()" 
+                     ShowOnlyOneCalendar="true" SingleDatePicker="false" StartDate="StartDate" EndDate="EndDate" OnRangeSelect="OnDateSelected" />
+    
     <DropdownFilterComponent SelectUpdated="OnSelected" />
 </div>
 
