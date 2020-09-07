@@ -5,16 +5,15 @@
 
 <div class="carousel slide" data-ride="carousel" data-interval="false" id="carouselExampleIndicators" style="min-height: 75px;">
     <div class="carousel-inner" role="listbox" style="background-color: #1f2833;border-radius: 5px;">
-        <CascadingValue Value="@unitData">
-
+        <CascadingValue Value="UnitData">
             <div class="carousel-item active">
-                <GraphComponent unitData="@unitData" />
+                <GraphComponent/>
             </div>
             <div class="carousel-item">
-                <TableViewComponent unitData="@unitData"></TableViewComponent>
+                <TableViewComponent ></TableViewComponent>
             </div>
             <div class="carousel-item">
-                <LatestTemperatureViewComponent unitData="@unitData"></LatestTemperatureViewComponent>
+                <LatestTemperatureViewComponent ></LatestTemperatureViewComponent>
             </div>
         </CascadingValue>
     </div>
@@ -30,24 +29,10 @@
 </div>
 
 @code {
-
-    public TempraturModul.Models.TempratureDTO[] unitData { get; set; }
+    [Parameter]
+    public TempraturModul.Models.TempratureDTO[] UnitData { get; set; }
 
     bool firstRender = true;
-
-
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            var data = new Datasource(new HttpClient());
-            unitData = (await data.GetDayAsync(DateTime.Now)).ToArray();
-        }
-        catch
-        {
-            System.Diagnostics.Debug.WriteLine("Nu var vi här");
-        }
-    }
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {

@@ -24,6 +24,7 @@
     private RenderFragment Tip;
 
     protected override void OnInitialized() { this.Tip = InitialTip; }
+
     public async Task HandleSelect(TItem item, RenderFragment<TItem> contentFragment)
     {
         this.Tip = contentFragment.Invoke(item);

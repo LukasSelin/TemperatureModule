@@ -12,6 +12,7 @@
 @using System.Linq
 @using System.Diagnostics
 @using TemperatureModuleDatasource
+@using TemperatureModule.Webpage.Models
 
 @using TemperatureModule.Webpage.Components
 
@@ -25,52 +26,90 @@
 </head>
 
 <body style="color: #f4f7f5;background-color: #08090a;">
-    <nav class="navbar navbar-light navbar-expand-md navigation-clean" style="height: 38px;background-color: #222823;">
-        <div class="container">
-            <a class="navbar-brand" href="#" style="vertical-align: middle;padding-top: 0px;padding-bottom: 0px;margin-top: -6px;">Wideco</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1" style="padding-bottom: 0px;padding-top: 0px;border-width: 0px;"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon" style="border-style: none;border-color: rgba(136,136,136,0);margin-top: -17px;"></span></button>
-            <div class="collapse navbar-collapse" id="navcol-1">
-                <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item" role="presentation" style="color: #f4f7f5;"><a class="nav-link active" href="#">First Item</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="#">Second Item</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="#">Third Item</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">Dropdown </a>
-                        <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="#">First Item</a><a class="dropdown-item" role="presentation" href="#">Second Item</a><a class="dropdown-item" role="presentation" href="#">Third Item</a></div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div>
-        <GraphControllPanelComponent></GraphControllPanelComponent>
-        <CarouselComponent></CarouselComponent>
-    </div>
-    <div class="unitList">
-        <ul class="list-group">
-            <li class="list-group-item" style="background-color: #1f2833;color: #c5c6c7;"><span>Enhetsnummer 1</span></li>
-            <li class="list-group-item" style="background-color: #1f2833;color: #c5c6c7;"><span>Enhetsnummer&nbsp;2</span></li>
-            <li class="list-group-item" style="background-color: #1f2833;color: #c5c6c7;"><span>Enhetsnummer 3<br></span></li>
-            <li class="list-group-item" style="color: #c5c6c7;background-color: #1f2833;"><span>Enhetsnummer 4&nbsp;</span></li>
-            <li class="list-group-item" style="color: #c5c6c7;background-color: #1f2833;"><span>Enhetsnummer 5</span></li>
-            <li class="list-group-item" style="color: #c5c6c7;background-color: #1f2833;"><span>Enhetsnummer 6</span></li>
-            <li class="list-group-item" style="color: #c5c6c7;background-color: #1f2833;"><span>Enhetsnummer 7</span></li>
-        </ul>
-        <div class="pagination">
-            <nav>
-                <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
-                </ul>
-            </nav>
-        </div>
-    </div>
+    
+        <GraphControllPanelComponent DateUpdated="DateUpdated" SelectUpdated="@FilterUpdated" StartDate="StartDate" EndDate="EndDate"></GraphControllPanelComponent>
+        <CarouselComponent UnitData="UnitData"></CarouselComponent>
+
+        <UnitListComponent></UnitListComponent>
 </body>
 @code
 {
     public TempraturModul.Models.TempratureDTO[] UnitData { get; set; }
+
+    public string Selection { get; set; } = "Today";
+
+    public DateTimeOffset? StartDate { get; set; }
+    public DateTimeOffset? EndDate { get; set; }
+
+    public async Task DateUpdated(BlazorDateRangePicker.DateRange dateRange)
+    {
+        var data = new Datasource(new HttpClient());
+        UnitData = (await data.GetDaysAsync(dateRange.Start.DateTime, dateRange.End.DateTime)).ToArray();
+        StartDate = dateRange.Start;
+        EndDate = dateRange.End;
+    }
+
+    // Todo add more support for more filters
+    public async Task FilterUpdated(FilterEnum selection)
+    {
+        var data = new Datasource(new HttpClient());
+
+        switch (selection)
+        {
+            case FilterEnum.Today:
+                var today = DateTime.Today;
+                UnitData = (await data.GetDayAsync(today)).ToArray();
+                StartDate = today;
+                EndDate = today;
+                break;
+
+            case FilterEnum.Yesterday:
+                var yesterday = DateTime.Today.AddDays(-1);
+                UnitData = (await data.GetDayAsync(yesterday)).ToArray();
+                StartDate = yesterday;
+                EndDate = yesterday;
+
+                break;
+
+            case FilterEnum.OneDay:
+                break;
+
+            case FilterEnum.ThreeDays:
+                var threedaySpan = DateTime.Today.AddDays(-3);
+                UnitData = (await data.GetDaysAsync(threedaySpan, DateTime.Today)).ToArray();
+                StartDate = threedaySpan;
+                EndDate = DateTime.Today;
+                break;
+
+            case FilterEnum.OneWeek:
+                break;
+
+            case FilterEnum.TwoWeeks:
+                break;
+
+            case FilterEnum.OneMonth:
+                break;
+
+            case FilterEnum.ThreeMonths:
+                break;
+
+            case FilterEnum.OneYear:
+                break;
+
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var data = new Datasource(new HttpClient());
+            UnitData = (await data.GetDayAsync(DateTime.Now)).ToArray();
+            StartDate = DateTime.Today;
+        }
+        catch
+        {
+            System.Diagnostics.Debug.WriteLine("Nu var vi här");
+        }
+    }
 }

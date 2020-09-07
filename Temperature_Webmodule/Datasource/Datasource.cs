@@ -44,7 +44,19 @@ namespace TemperatureModuleDatasource
             var inputs = new API_Inputs()
             {
                 StartDate = date.Date,
-                StopDate = date.AddDays(1)
+                StopDate = date.AddDays(1).Date
+            };
+
+            var temperatures = await helper.GetTemperaturesAsync(inputs);
+            return temperatures;
+        }
+
+        public async Task<IEnumerable<TempratureDTO>> GetDaysAsync(DateTime startDate, DateTime endDate)
+        {
+            var inputs = new API_Inputs()
+            {
+                StartDate = startDate.Date,
+                StopDate = endDate.Date.AddDays(1)
             };
 
             var temperatures = await helper.GetTemperaturesAsync(inputs);

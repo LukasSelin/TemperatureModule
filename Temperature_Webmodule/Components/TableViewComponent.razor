@@ -9,11 +9,11 @@
         <tbody>
             @if(unitData != null)
             {
-                @foreach(var item in unitData[0].UnitDataPT)
+                @for(int i = unitData[0].UnitDataPT.Count - 1; 0 < i; i--)
                 {
                     <tr>
-                        <td>@item.DataDateTime.ToShortTimeString()</td>
-                        <td>@item.DataPTValue</td>
+                        <td>@unitData[0].UnitDataPT[i].DataDateTime.ToShortTimeString()</td>
+                        <td>@unitData[0].UnitDataPT[i].DataPTValue</td>
                     </tr>
                 }
             }
@@ -35,7 +35,7 @@
 </div>
 
 @code {
-    [Parameter]
+    [CascadingParameter]
     public TempraturModul.Models.TempratureDTO[] unitData { get; set; }
 
 }

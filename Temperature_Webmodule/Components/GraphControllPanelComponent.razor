@@ -1,8 +1,38 @@
-﻿<div class="graph-controllpanel" style="padding-left: 0px;">
-    <h1 style="color: #f4f7f5;">Temperature Readings</h1><input class="form-control-lg order-6" type="date" style="background-color: #08090a;color: #f4f7f5;border-color: #08090a;text-align: right;padding-right: 0px;" value="2020-08-28">
-    <DropdownFilterComponent />
+﻿@using TemperatureModule.Webpage.Models
+@using BlazorDateRangePicker
+
+<div class="graph-controllpanel" style="padding-left: 0px;">
+    <h1 style="color: #f4f7f5;">Temperature Readings</h1>
+    @if(StartDate != null)
+    {
+        <DateRangePicker class="order-6" placeholder="@StartDate.GetValueOrDefault().DateTime.ToShortDateString()" 
+                         ShowOnlyOneCalendar="true" SingleDatePicker="false" StartDate="StartDate" EndDate="EndDate" OnRangeSelect="OnDateSelected" />
+    }
+    <DropdownFilterComponent SelectUpdated="OnSelected" />
 </div>
 
 @code {
+    [Parameter]
+    public EventCallback<FilterEnum> SelectUpdated { get; set; }
 
+    [Parameter]
+    public EventCallback<DateRange> DateUpdated { get; set; }
+
+    [Parameter]
+    public DateTimeOffset? StartDate { get; set; }
+
+    [Parameter]
+    public DateTimeOffset? EndDate { get; set; }
+
+    public async Task OnSelected(FilterEnum selection)
+    {
+        await SelectUpdated.InvokeAsync(selection);
+    }
+
+    public async Task OnDateSelected(DateRange range)
+    {
+        await DateUpdated.InvokeAsync(range);
+        StartDate = range.Start;
+        EndDate = range.End;
+    }
 }

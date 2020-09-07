@@ -13,7 +13,7 @@
 </div>
 
 @code {
-    [Parameter]
+    [CascadingParameter]
     public TempraturModul.Models.TempratureDTO[] unitData { get; set; }
 
     private LineConfig _lineChartConfig;
@@ -67,6 +67,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
+        _lineChartConfig.Data.Datasets.Clear();
         var linechartSet = new LineDataset<ChartJs.Blazor.ChartJS.Common.Time.TimeTuple<double>>()
         {
             BackgroundColor = "#006dff",
@@ -86,7 +87,7 @@
                     , dataPoint.DataPTValue));
             }
 
-            Debug.WriteLine("Adding {0} values to the graph: ", linechartSet.Data.Count);
+            Debug.WriteLine("Adding {0} values to the graph", linechartSet.Data.Count);
             _lineChartConfig.Data.Datasets.Add(linechartSet);
         }
     }

@@ -2,9 +2,10 @@
 
 @if (unitData != null)
 {
+  
     @foreach (KeyValuePair<string, UnitData> kvp in keyValues)
     {
-        @if (kvp.Value == keyValues["Latest Temperature"])
+        @if (kvp.Key == "Latest Temperature")
         {
             <div class="d-xl-flex justify-content-xl-start align-items-xl-center" style="padding-top: 12px;padding-left: 20px;padding-bottom: 12px;font-size: 30px;border: 1px solid rgba(0,0,0,.125);">
                 <strong class="text-left d-flex d-xl-flex align-items-center align-items-xl-center">@kvp.Key:</strong>
@@ -24,13 +25,15 @@
 }
 else
 {
-    <strong>Loading</strong>
+    <div class="d-xl-flex justify-content-xl-start align-items-xl-center" style="padding-top: 12px;padding-left: 20px;padding-bottom: 12px;font-size: 30px;border: 1px solid rgba(0,0,0,.125);">
+        <strong>Loading</strong>
+    </div>
 }
 
 
 
 @code {
-    [Parameter]
+    [CascadingParameter]
     public TempraturModul.Models.TempratureDTO[] unitData { get; set; }
 
     private Dictionary<string, TempraturModul.Models.UnitData> keyValues = new Dictionary<string, TempraturModul.Models.UnitData>();
@@ -39,24 +42,24 @@ else
     {
         if (unitData != null)
         {
+            keyValues.Clear();
             double allTemp = 0;
 
             foreach (var unit in unitData[0].UnitDataPT)
             {
                 allTemp += unit.DataPTValue;
             }
-
             var todayAverage = Math.Round(allTemp / unitData[0].UnitDataPT.Count, 1);
 
             var highestRecord = GetHighestRecord(unitData[0].UnitDataPT);
             var lowestRecord = GetLowestRecord(unitData[0].UnitDataPT);
 
             keyValues.Add("Latest Temperature", unitData[0].UnitDataPT.Last());
-            keyValues.Add("Highest temperature today", highestRecord);
-            keyValues.Add("Lowest temperature today", lowestRecord);
+            keyValues.Add("Highest temperature", highestRecord);
+            keyValues.Add("Lowest temperature", lowestRecord);
 
 
-            //keyValues.Add("Average temperature today", unitData[0].UnitDataPT.Average(u => u.DataPTValue));
+            //keyValues.Add("Average temperature", unitData[0].UnitDataPT.Average(u => u.DataPTValue));
 
         }
     }
@@ -64,9 +67,9 @@ else
     private UnitData GetHighestRecord(List<UnitData> units)
     {
         var data = units.Max(i => i.DataPTValue);
-        var unit = units.Where(i => i.DataPTValue == data).Single();
+        var unit = units.Where(i => i.DataPTValue == data).ToArray();
 
-        return unit;
+        return unit[0];
     }
 
     private UnitData GetLowestRecord(List<UnitData> units)
