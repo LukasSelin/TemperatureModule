@@ -27,7 +27,7 @@
 
 <body style="color: #f4f7f5;background-color: #08090a;">
     
-        <GraphControllPanelComponent DateUpdated="DateUpdated" SelectUpdated="@FilterUpdated" StartDate="StartDate" EndDate="EndDate"></GraphControllPanelComponent>
+        <GraphControllPanelComponent DateUpdated="DateUpdated" SelectUpdated="@FilterUpdated" StartDate="StartDate" EndDate="EndDate" />
         <CarouselComponent UnitData="UnitData"></CarouselComponent>
 
         <UnitListComponent></UnitListComponent>
@@ -82,18 +82,38 @@
                 break;
 
             case FilterEnum.OneWeek:
+                var oneWeekOffset = DateTime.Today.AddDays(-7);
+                UnitData = (await data.GetDaysAsync(oneWeekOffset, DateTime.Today)).ToArray();
+                StartDate = oneWeekOffset;
+                EndDate = DateTime.Today;
                 break;
 
             case FilterEnum.TwoWeeks:
+                var twoWeeksOffset = DateTime.Today.AddDays(-14);
+                UnitData = (await data.GetDaysAsync(twoWeeksOffset, DateTime.Today)).ToArray();
+                StartDate = twoWeeksOffset;
+                EndDate = DateTime.Today;
                 break;
 
             case FilterEnum.OneMonth:
+                var oneMonthOffset = DateTime.Today.AddMonths(-1);
+                UnitData = (await data.GetDaysAsync(oneMonthOffset, DateTime.Today)).ToArray();
+                StartDate = oneMonthOffset;
+                EndDate = DateTime.Today;
                 break;
 
             case FilterEnum.ThreeMonths:
+                var threeMonthsOffset = DateTime.Today.AddMonths(-3);
+                UnitData = (await data.GetDaysAsync(threeMonthsOffset, DateTime.Today)).ToArray();
+                StartDate = threeMonthsOffset;
+                EndDate = DateTime.Today;
                 break;
 
             case FilterEnum.OneYear:
+                var oneYearOffset = DateTime.Today.AddYears(-1);
+                UnitData = (await data.GetDaysAsync(oneYearOffset, DateTime.Today)).ToArray();
+                StartDate = oneYearOffset;
+                EndDate = DateTime.Today;
                 break;
 
         }

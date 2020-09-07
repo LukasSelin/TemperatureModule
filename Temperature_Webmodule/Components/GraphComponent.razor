@@ -64,17 +64,16 @@
         };
     }
 
-
     protected override async Task OnParametersSetAsync()
     {
         _lineChartConfig.Data.Datasets.Clear();
         var linechartSet = new LineDataset<ChartJs.Blazor.ChartJS.Common.Time.TimeTuple<double>>()
         {
-            BackgroundColor = "#006dff",
-            BorderColor = "#006dff",
+            BackgroundColor = "#f3ff00",
+            BorderColor = "#f3ff00",
             BorderWidth = 2,
             Fill = false,
-            PointRadius = 4,
+            PointRadius = 2,
             ShowLine = true
         };
 
