@@ -90,11 +90,6 @@ namespace TemperatureModule.Webpage.HelpClasses
                     dateRange.Start = oneYearOffset;
                     dateRange.End = DateTime.Today;
                     break;
-
-                case FilterEnum.CustomDate:
-
-                    break;
-
             }
             return dateRange;
         }

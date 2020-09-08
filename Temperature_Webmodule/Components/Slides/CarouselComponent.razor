@@ -4,17 +4,25 @@
 @inject IJSRuntime JsRuntime
 
 <div class="carousel slide" data-ride="carousel" data-interval="false" id="carouselExampleIndicators" style="min-height: 75px;">
-    <div class="carousel-inner" role="listbox" style="background-color: #1f2833;border-radius: 5px;">
+    <div class="carousel-inner" role="listbox">
         <CascadingValue Value="UnitData">
-            <div class="carousel-item active">
-                <GraphComponent/>
+            <div class="carousel-item active" style="display:flex; flex-direction:column">
+
+                <div style="order:1; border-radius:5px;">
+                    <LatestTemperatureViewComponent ></LatestTemperatureViewComponent>
+                </div>
+
+                <div style="order:2;height: 15px"></div>
+
+                <div style="order:3; border-radius:5px">
+                    <GraphComponent/>
+                </div>
+
             </div>
             <div class="carousel-item">
                 <TableViewComponent ></TableViewComponent>
             </div>
-            <div class="carousel-item">
-                <LatestTemperatureViewComponent ></LatestTemperatureViewComponent>
-            </div>
+            
         </CascadingValue>
     </div>
     <div>
@@ -24,7 +32,6 @@
     <ol class="carousel-indicators">
         <li data-target="#carousel-1" data-slide-to="0" class="active"></li>
         <li data-target="#carousel-1" data-slide-to="1"></li>
-        <li data-target="#carousel-1" data-slide-to="2"></li>
     </ol>
 </div>
 

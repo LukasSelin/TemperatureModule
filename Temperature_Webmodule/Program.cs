@@ -11,6 +11,8 @@ using Microsoft.Extensions.Logging;
 using TemperatureModule.Webpage;
 using TemperatureModule.Webpage.Datasource;
 using TemperatureModuleDatasource;
+using System.Threading;
+using System.Globalization;
 
 namespace Temperature_Webmodule
 {
@@ -18,6 +20,8 @@ namespace Temperature_Webmodule
     {
         public static async Task Main(string[] args)
         {
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("sv-SE");
+
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
 

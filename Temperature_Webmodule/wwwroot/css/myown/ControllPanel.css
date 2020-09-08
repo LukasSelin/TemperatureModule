@@ -1,0 +1,7 @@
+﻿.dateRangePicker {
+    margin-right: 5px; 
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    text-align: center;
+    width: calc(12em + 2px);
+}

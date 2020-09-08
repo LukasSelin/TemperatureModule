@@ -4,16 +4,22 @@
 
 @using TemperatureModule.Webpage.Components.DataControllPanel.Dropdown
 
-<div class="graph-controllpanel" style="padding-left: 0px;">
-    <h1 style="color: #f4f7f5;">Temperature Readings</h1>
 
-    <DateRangePicker class="order-6" placeholder="@StartDate.GetValueOrDefault().DateTime.ToShortDateString()"
-                     ShowOnlyOneCalendar="true" SingleDatePicker="false" StartDate="StartDate" EndDate="EndDate" OnRangeSelect="OnDateSelected" />
+<StyleSheet Resource="assets/css/myown/ControllPanel.css" Assembly="GetType().Assembly"></StyleSheet>
 
-    <DropdownFilterComponent Tip="@dropdownTip" Filters="filterList" SelectUpdated="OnSelected" />
+<div class="graph-controllpanel" style="padding-left: 0px; display:flex; flex-direction:row">
+    
+    <h1 style="color: #f4f7f5; order:1">Lövekulle camping</h1>
+
+    <DateRangePicker class="order-6 dateRangePicker" placeholder="@StartDate.GetValueOrDefault().DateTime.ToShortDateString()"
+                     ShowOnlyOneCalendar="true" SingleDatePicker="false" StartDate="StartDate" EndDate="EndDate" OnRangeSelect="OnDateSelected" Culture="culture" />
+    <div style="order:7">
+        <DropdownFilterComponent Tip="@dropdownTip" Filters="filterList" SelectUpdated="OnSelected" />
+    </div>
 </div>
-
 @code {
+    private System.Globalization.CultureInfo culture = System.Globalization.CultureInfo.GetCultureInfo("sv-SE");
+
     [Parameter]
     public EventCallback<FilterEnum> SelectUpdated { get; set; }
 

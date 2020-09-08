@@ -8,8 +8,8 @@
 
 @using System.Diagnostics
 
-<div class="d-block align-self-center center-block graph" style="min-height: 250px;height: 349px;">
-    <ChartJsLineChart @ref="_lineChartJs" Config="@_lineChartConfig" Height="300"></ChartJsLineChart>
+<div class="center-block graph" style="min-height: 250px; margin-right: 5px">
+    <ChartJsLineChart @ref="_lineChartJs" Config="@_lineChartConfig" Height="400"></ChartJsLineChart>
 </div>
 
 @code {
@@ -29,7 +29,7 @@
                 Responsive = true,
                 Legend = new ChartJs.Blazor.ChartJS.Common.Handlers.Legend
                 {
-                    Display = false
+                    Display = true
                 },
                 Scales = new Scales
                 {
@@ -49,12 +49,18 @@
                         }
                     },
                     yAxes = new List<CartesianAxis>
-                {
+                    {
                         new LinearCartesianAxis
                         {
                             ScaleLabel = new ScaleLabel
                             {
                                 LabelString = "Temp. °C"
+                            },
+                            Ticks = new ChartJs.Blazor.ChartJS.Common.Axes.Ticks.LinearCartesianTicks
+                            {
+                                SuggestedMin = 0,
+                                SuggestedMax = 45
+                                
                             }
 
                         }
@@ -67,27 +73,52 @@
     protected override async Task OnParametersSetAsync()
     {
         _lineChartConfig.Data.Datasets.Clear();
-        var linechartSet = new LineDataset<ChartJs.Blazor.ChartJS.Common.Time.TimeTuple<double>>()
+
+
+
+        var airTempratureDataset = new LineDataset<TimeTuple<double>>()
         {
             BackgroundColor = "#f3ff00",
             BorderColor = "#f3ff00",
             BorderWidth = 2,
             Fill = false,
-            PointRadius = 2,
-            ShowLine = true
+            PointRadius = 4,
+            ShowLine = true,
+            Label = "Air temperature"
+        };
+
+        var waterTempratureDataset = new LineDataset<ChartJs.Blazor.ChartJS.Common.Time.TimeTuple<double>>()
+        {
+            BackgroundColor = "#1a5fff",
+            BorderColor = "#1a5fff",
+            BorderWidth = 2,
+            Fill = false,
+            PointRadius = 4,
+            ShowLine = true,
+            Label = "Water temperature"
         };
 
         if (unitData != null)
         {
             foreach (var dataPoint in unitData[0].UnitDataPT)
             {
-                linechartSet.Add(new TimeTuple<double>(
-                    new Moment(dataPoint.DataDateTime)
-                    , dataPoint.DataPTValue));
+                if(dataPoint.PTIndex == 0)
+                {
+                    airTempratureDataset.Add(new TimeTuple<double>(
+                        new Moment(dataPoint.DataDateTime), dataPoint.DataPTValue));
+                }
+                else if(dataPoint.PTIndex == 1)
+                {
+                    waterTempratureDataset.Add(new TimeTuple<double>(
+                        new Moment(dataPoint.DataDateTime), dataPoint.DataPTValue));
+                }
             }
 
-            Debug.WriteLine("Adding {0} values to the graph", linechartSet.Data.Count);
-            _lineChartConfig.Data.Datasets.Add(linechartSet);
+            Debug.WriteLine("Adding {0} air tempratures to the graph", airTempratureDataset.Data.Count);
+            _lineChartConfig.Data.Datasets.Add(airTempratureDataset);
+            Debug.WriteLine("Adding {0} water tempratures to the graph", airTempratureDataset.Data.Count);
+            _lineChartConfig.Data.Datasets.Add(waterTempratureDataset);
+
         }
     }
 }

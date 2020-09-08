@@ -45,7 +45,7 @@ namespace TempraturModul.Models
             }
             else
             {
-                returnString = returnString + "&Columns=" + "%22PT=0%22";
+                returnString = returnString + "&Columns=" + "%22PT=0,1%22";
 
             }
 
