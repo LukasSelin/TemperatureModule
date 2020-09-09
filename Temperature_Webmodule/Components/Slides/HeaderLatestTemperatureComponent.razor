@@ -1,0 +1,21 @@
+﻿@using TempraturModul.Models
+@using TemperatureModule.Webpage.Models
+
+
+<div style="padding-top: 12px;padding-bottom: 12px;padding-left: 20px; display:flex; flex-direction:row; align-self:center; font-size: 30px;border-bottom: 1px solid rgba(0,0,0,.125); ">
+    <strong class="order-1">Latest @_medium temperature:</strong>
+    <p class="order-2" style="margin-left: 7px;margin-bottom: 0px;">
+        <strong>@Latest.DataPTValue °C  </strong>&nbsp;
+    </p>
+</div>
+
+@code {
+    [Parameter]
+    public UnitData Latest { get; set; }
+
+    [Parameter]
+    public PTIndex PTIndex { get; set; }
+
+    private string _medium { get { return PTIndex == PTIndex.Water ? "water" : "air"; } }
+
+}

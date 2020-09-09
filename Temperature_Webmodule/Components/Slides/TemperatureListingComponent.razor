@@ -1,0 +1,29 @@
+﻿@using TempraturModul.Models
+@using TemperatureModule.Webpage.Models
+
+<div style="padding-top: 6px;padding-bottom: 6px;padding-left: 20px; display:flex; flex-direction:row">
+    <p class="order-1">@_HighLow @_medium temperature: </p>
+    <p class="order-2" style="margin-left:5px">
+        <strong style="color:@_color"> @data.DataPTValue °C</strong>&nbsp; at @data.DataDateTime.ToString("HH:mm")
+    </p>
+</div>
+
+@code {
+    [Parameter]
+    public UnitData data { get; set; }
+
+    [Parameter]
+    public bool IsHighest { get; set; }
+
+    [Parameter]
+    public PTIndex PTIndex { get; set; }
+
+    private string _medium { get { return PTIndex == PTIndex.Water ? "water" : "air"; } }
+
+    private string _HighLow { get { return IsHighest ? "Highest" : "Lowest"; } }
+
+    private string _color { get { return IsHighest ? "darkred" : "cornflowerblue"; } }
+
+
+
+    }

@@ -1,0 +1,19 @@
+﻿@using TemperatureModule.Webpage.Models
+
+<div style="padding-top: 6px;padding-bottom: 6px;padding-left: 20px; display:flex; flex-direction:row">
+    <p class="order-1">Average @_medium temperature: </p>
+    <p class="order-2" style="margin-left:5px">
+        <strong> @Average °C</strong>&nbsp;
+    </p>
+</div>
+
+@code {
+    [Parameter]
+    public double Average { get; set; }
+
+    [Parameter]
+    public PTIndex PTIndex { get; set; }
+
+    private string _medium { get { return PTIndex == PTIndex.Water ? "water" : "air"; } }
+
+}

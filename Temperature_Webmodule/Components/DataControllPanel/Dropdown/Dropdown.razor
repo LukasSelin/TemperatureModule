@@ -16,10 +16,10 @@
 @code {
     [Parameter]
     public RenderFragment InitialTip { get; set; }
-    
+
     [Parameter]
     public RenderFragment ChildContent { get; set; }
-    
+
     [Parameter]
     public EventCallback<TItem> OnSelected { get; set; }
 
@@ -27,6 +27,11 @@
     private RenderFragment Tip;
 
     protected override void OnInitialized() { this.Tip = InitialTip; }
+
+    protected async Task OnParametersSetAsync()
+    {
+        this.Tip = 
+    }
 
     public async Task HandleSelect(TItem item, RenderFragment<TItem> contentFragment)
     {

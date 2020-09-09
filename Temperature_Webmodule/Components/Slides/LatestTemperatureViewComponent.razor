@@ -1,34 +1,30 @@
 ﻿@using  TempraturModul.Models
+@using TemperatureModule.Webpage.Models 
 
+<div class="center-block.graph" style="background-color: #1f2833; border-radius:5px">
 @if (unitData != null)
 {
-    <div class="center-block.graph" style="background-color: #1f2833; border-radius:5px">
-    @foreach (KeyValuePair<string, UnitData> kvp in keyValues)
-    {
-        @if (kvp.Key == "Latest temperature")
-        {
-            <div class="d-xl-flex justify-content-xl-start align-items-xl-center" style="padding-top: 12px;padding-left: 20px;padding-bottom: 12px;font-size: 30px;border: 1px solid rgba(0,0,0,.125);">
-                
-                <strong class="text-left d-flex d-xl-flex align-items-center align-items-xl-center">@kvp.Key:</strong>
-                
-                <p class="text-center d-flex d-xl-flex align-items-center justify-content-xl-center" style="margin-left: 7px;margin-bottom: 0px;">
-                    <br>
-                    <strong>@kvp.Value.DataPTValue °C  </strong>&nbsp; 
-                </p>
-            </div>
+    <div id="records" style="display:flex; flex-direction:row; flex-wrap: wrap">
 
-            <div style="margin-top: 15px;"></div>
-        }
-        else
-        {
-            <div style="padding-top: 12px;padding-bottom: 12px;padding-left: 20px; display:flex; flex-direction:row">
-                <p class="order-1">@kvp.Key: </p>
-                <p class="order-2" style="margin-left:5px">
-                    <strong style="color:aqua"> @kvp.Value.DataPTValue °C</strong>&nbsp; at @kvp.Value.DataDateTime.ToString("HH:mm")
-                </p>
-            </div>
-        }
-    }
+        <div id="airRecords" class="order-0" style="display: flex; flex-direction: column;border: 1px solid rgba(0,0,0,.125);">
+            
+            <HeaderLatestTemperatureComponent Latest="@_airTemperatureUnit.Latest" PTIndex="PTIndex.Air"></HeaderLatestTemperatureComponent>
+
+            <TemperatureListingComponent data="@_airTemperatureUnit.Highest" IsHighest="true" PTIndex="PTIndex.Air"></TemperatureListingComponent>
+            <TemperatureListingComponent data="@_airTemperatureUnit.Lowest" IsHighest="false" PTIndex="PTIndex.Air"></TemperatureListingComponent>
+            <AverageTemperatureComponent Average="@_airTemperatureUnit.Average" PTIndex="PTIndex.Air"></AverageTemperatureComponent>
+
+        </div>
+
+        <div id="waterRecords" class="order-1" style="display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,.125);">
+           
+            <HeaderLatestTemperatureComponent Latest="@_waterTemperatureUnit.Latest" PTIndex="PTIndex.Water"></HeaderLatestTemperatureComponent>
+ 
+            <TemperatureListingComponent data="@_waterTemperatureUnit.Highest" IsHighest="true" PTIndex="PTIndex.Water"></TemperatureListingComponent>
+            <TemperatureListingComponent data="@_waterTemperatureUnit.Lowest" IsHighest="false" PTIndex="PTIndex.Water"></TemperatureListingComponent>
+            <AverageTemperatureComponent Average="@_waterTemperatureUnit.Average" PTIndex="PTIndex.Water"></AverageTemperatureComponent>
+
+        </div>
     </div>
 }
 else
@@ -37,6 +33,7 @@ else
         <strong>Loading</strong>
     </div>
 }
+</div>
 
 
 
@@ -44,50 +41,17 @@ else
     [CascadingParameter]
     public TempraturModul.Models.TempratureDTO[] unitData { get; set; }
 
-    private Dictionary<string, TempraturModul.Models.UnitData> keyValues = new Dictionary<string, TempraturModul.Models.UnitData>();
+    private TemperatureModule.Webpage.Models.LatestTemperatureUnit _airTemperatureUnit;
+    private TemperatureModule.Webpage.Models.LatestTemperatureUnit _waterTemperatureUnit;
+
 
     protected override async Task OnParametersSetAsync()
     {
         if (unitData != null)
         {
-            keyValues.Clear();
-            double allTemp = 0;
-
-            foreach (var unit in unitData[0].UnitDataPT)
-            {
-                allTemp += unit.DataPTValue;
-            }
-            var todayAverage = Math.Round(allTemp / unitData[0].UnitDataPT.Count, 1);
-
-            var highestRecord = GetHighestRecord(unitData[0].UnitDataPT);
-            var lowestRecord = GetLowestRecord(unitData[0].UnitDataPT);
-
-            keyValues.Add("Latest temperature", unitData[0].UnitDataPT.Last());
-            keyValues.Add("Highest temperature", highestRecord);
-            keyValues.Add("Lowest temperature", lowestRecord);
-
-
-
-            //keyValues.Add("Number of recordings", unitData[0].UnitDataPT.Count);
-            //keyValues.Add("Average temperature", unitData[0].UnitDataPT.Average(u => u.DataPTValue));
-
+            _airTemperatureUnit = new LatestTemperatureUnit(unitData[0].UnitDataPT.Where(e => e.PTIndex == (int)PTIndex.Air));
+            _waterTemperatureUnit = new LatestTemperatureUnit(unitData[0].UnitDataPT.Where(e => e.PTIndex == (int)PTIndex.Water));
         }
-    }
-
-    private UnitData GetHighestRecord(List<UnitData> units)
-    {
-        var data = units.Max(i => i.DataPTValue);
-        var unit = units.Where(i => i.DataPTValue == data).ToArray();
-
-        return unit[0];
-    }
-
-    private UnitData GetLowestRecord(List<UnitData> units)
-    {
-        var data = units.Min(i => i.DataPTValue);
-        var unit = units.Where(i => i.DataPTValue == data).ToArray();
-
-        return unit[0];
     }
 
 }
