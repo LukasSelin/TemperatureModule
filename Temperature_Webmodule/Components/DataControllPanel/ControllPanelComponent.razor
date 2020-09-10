@@ -6,9 +6,10 @@
 
 
 <StyleSheet Resource="assets/css/myown/ControllPanel.css" Assembly="GetType().Assembly"></StyleSheet>
+<link rel="stylesheet" href="/assets/css/styles.min.css">
 
-<div class="graph-controllpanel" style="display:flex; flex-direction:row">
-    
+<div class="graph-controllpanel" style="display:flex; flex-direction:row; flex-wrap:wrap">
+
     <h1 style="color: #f4f7f5; order:1">Lövekulle camping</h1>
 
     <DateRangePicker class="order-6 dateRangePicker" placeholder="@StartDate.GetValueOrDefault().DateTime.ToShortDateString()"
@@ -42,6 +43,7 @@
         var range = FilterEnumHelper.GetDateRange(selection);
         StartDate = range.Start;
         EndDate = range.End;
+        dropdownTip = filterList[(int)selection];
     }
 
     public async Task OnDateSelected(DateRange range)

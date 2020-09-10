@@ -1,25 +1,32 @@
 ﻿@using  TempraturModul.Models
-@using TemperatureModule.Webpage.Models 
+@using TemperatureModule.Webpage.Models
 
-<div class="center-block.graph" style="background-color: #1f2833; border-radius:5px">
+
+
+
+
 @if (unitData != null)
 {
     <div id="records" style="display:flex; flex-direction:row; flex-wrap: wrap">
 
-        <div id="airRecords" class="order-0" style="display: flex; flex-direction: column;border: 1px solid rgba(0,0,0,.125);">
-            
+        <div id="airRecords" class="order-0 records box">
+
             <HeaderLatestTemperatureComponent Latest="@_airTemperatureUnit.Latest" PTIndex="PTIndex.Air"></HeaderLatestTemperatureComponent>
 
             <TemperatureListingComponent data="@_airTemperatureUnit.Highest" IsHighest="true" PTIndex="PTIndex.Air"></TemperatureListingComponent>
             <TemperatureListingComponent data="@_airTemperatureUnit.Lowest" IsHighest="false" PTIndex="PTIndex.Air"></TemperatureListingComponent>
             <AverageTemperatureComponent Average="@_airTemperatureUnit.Average" PTIndex="PTIndex.Air"></AverageTemperatureComponent>
 
+            <TermometerComponent temperatureUnit="@_airTemperatureUnit"></TermometerComponent>
+
         </div>
 
-        <div id="waterRecords" class="order-1" style="display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,.125);">
-           
+        <div style="margin: 5px"></div>
+
+        <div id="waterRecords" class="order-2 records box">
+
             <HeaderLatestTemperatureComponent Latest="@_waterTemperatureUnit.Latest" PTIndex="PTIndex.Water"></HeaderLatestTemperatureComponent>
- 
+
             <TemperatureListingComponent data="@_waterTemperatureUnit.Highest" IsHighest="true" PTIndex="PTIndex.Water"></TemperatureListingComponent>
             <TemperatureListingComponent data="@_waterTemperatureUnit.Lowest" IsHighest="false" PTIndex="PTIndex.Water"></TemperatureListingComponent>
             <AverageTemperatureComponent Average="@_waterTemperatureUnit.Average" PTIndex="PTIndex.Water"></AverageTemperatureComponent>
@@ -29,11 +36,10 @@
 }
 else
 {
-    <div class="d-xl-flex justify-content-xl-start align-items-xl-center" style="padding-top: 12px;padding-left: 20px;padding-bottom: 12px;font-size: 30px;border: 1px solid rgba(0,0,0,.125);">
+    <div style="padding-top: 12px;padding-left: 20px;padding-bottom: 12px;font-size: 30px;border: 1px solid rgba(0,0,0,.125);">
         <strong>Loading</strong>
     </div>
 }
-</div>
 
 
 
@@ -45,13 +51,18 @@ else
     private TemperatureModule.Webpage.Models.LatestTemperatureUnit _waterTemperatureUnit;
 
 
+
     protected override async Task OnParametersSetAsync()
     {
+
+
         if (unitData != null)
         {
             _airTemperatureUnit = new LatestTemperatureUnit(unitData[0].UnitDataPT.Where(e => e.PTIndex == (int)PTIndex.Air));
             _waterTemperatureUnit = new LatestTemperatureUnit(unitData[0].UnitDataPT.Where(e => e.PTIndex == (int)PTIndex.Water));
         }
     }
+
+    
 
 }

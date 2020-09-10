@@ -1,0 +1,35 @@
+﻿@using TemperatureModule.Webpage.Models
+@inject IJSRuntime jsRuntime
+
+<link rel="stylesheet" href="css/myown/Termometer.css">
+
+<div id="wrapper">
+    <div id="termometer">
+        <div id="latestTemperature" style="height:0" data-value="Latest: @temperatureUnit.Latest.DataPTValue °C"></div>
+        <div id="highestTemperature" style="height:0" data-value="Highest: @temperatureUnit.Highest.DataPTValue °C"></div>
+        <div id="lowestTemperature" style="height:0" value="" data-value="Lowest: @temperatureUnit.Lowest.DataPTValue °C"></div>
+
+        <div id="graduations"></div>
+    </div>
+
+    <div id="playground">
+        <p id="unit">Celcius C°</p>
+    </div>
+    <p id="info">Click on the values to change them!</p>
+</div>
+
+
+@code {
+    [Parameter]
+    public LatestTemperatureUnit temperatureUnit { get; set; }
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await jsRuntime.InvokeAsync<object>("temperature", 
+                temperatureUnit.Latest.DataPTValue, temperatureUnit.Highest.DataPTValue, temperatureUnit.Lowest.DataPTValue);
+        }
+    }
+}

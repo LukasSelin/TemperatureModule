@@ -8,7 +8,10 @@
 
 @using System.Diagnostics
 
-<div class="center-block graph" style="min-height: 250px; margin-right: 5px">
+<link rel="stylesheet" href="css/myown/Test.css">
+
+
+<div class="graph box" style="min-height: 250px; margin-right: 5px">
     <ChartJsLineChart @ref="_lineChartJs" Config="@_lineChartConfig" Height="400"></ChartJsLineChart>
 </div>
 
@@ -34,7 +37,7 @@
                 Scales = new Scales
                 {
                     xAxes = new List<CartesianAxis>
-                {
+            {
                         new TimeAxis
                         {
                             ScaleLabel = new ScaleLabel
@@ -49,7 +52,7 @@
                         }
                     },
                     yAxes = new List<CartesianAxis>
-                    {
+                {
                         new LinearCartesianAxis
                         {
                             ScaleLabel = new ScaleLabel
@@ -60,7 +63,7 @@
                             {
                                 SuggestedMin = 0,
                                 SuggestedMax = 45
-                                
+
                             }
 
                         }
@@ -102,12 +105,12 @@
         {
             foreach (var dataPoint in unitData[0].UnitDataPT)
             {
-                if(dataPoint.PTIndex == 0)
+                if (dataPoint.PTIndex == 0)
                 {
                     airTempratureDataset.Add(new TimeTuple<double>(
                         new Moment(dataPoint.DataDateTime), dataPoint.DataPTValue));
                 }
-                else if(dataPoint.PTIndex == 1)
+                else if (dataPoint.PTIndex == 1)
                 {
                     waterTempratureDataset.Add(new TimeTuple<double>(
                         new Moment(dataPoint.DataDateTime), dataPoint.DataPTValue));

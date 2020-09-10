@@ -163,21 +163,11 @@
     order: 10
 }
 
-.center-block {
-    margin-left: auto;
-    margin-right: auto;
-    display: block
-}
-
 .unit-listObject {
     width: 15%
 }
 
-.center-block.graph {
-    background-color: #1f2833;
-    padding: 12px;
-    border-radius: 5px
-}
+
 
 .carousel-control-next, .carousel-control-prev {
     width: 2.5%
@@ -208,10 +198,6 @@
 
 .page-item > .active, .page-item > .active > a, .page-link, .pagination > .active {
     background-color: #1f2833
-}
-
-body {
-    background-color: #0b0c10
 }
 
 .pagination > li > a {

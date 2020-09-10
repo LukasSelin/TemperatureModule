@@ -1,0 +1,41 @@
+﻿html {
+    background-color: #102027;
+}
+
+body {
+    background-color: transparent;
+    color: #ffffff;
+}
+
+.box {
+    background-color: #37474f;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    width: 50ch
+}
+
+.records {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 5px;
+}
+
+.graph {
+    padding: 12px;
+    border-radius: 5px;
+    width: 100%
+}
+
+.row {
+    width: 99%;
+    color: #ffffff;
+}
+
+.ui-progressbar {
+    background-color: #133b5c;
+    border: 1px solid rgba(0,0,0,.125);
+    width: 100%
+}
+.ui-progressbar-value {
+    background-color: #1e5f74;
+}

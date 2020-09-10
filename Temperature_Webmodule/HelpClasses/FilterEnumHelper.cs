@@ -28,11 +28,6 @@ namespace TemperatureModule.Webpage.HelpClasses
             }
         }
 
-        private static string GetWrittenformat(int number)
-        {
-            string[] numberLookup = new string[] { "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" };
-            return numberLookup[number];
-        }
 
         public static DateRange GetDateRange(FilterEnum selection)
         {
@@ -92,6 +87,11 @@ namespace TemperatureModule.Webpage.HelpClasses
                     break;
             }
             return dateRange;
+        }
+        private static string GetWrittenformat(int number)
+        {
+            string[] numberLookup = new string[] { "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" };
+            return numberLookup[number];
         }
     }
 }

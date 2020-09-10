@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Temperature Webmodule</title>
     <base href="/" />
-    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/app.css" rel="stylesheet" />
-
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="_content/Radzen.Blazor/css/Software.css">
     <link rel="stylesheet" href="_content/BlazorDateRangePicker/daterangepicker.min.css" />
 
 </head>
@@ -21,13 +21,13 @@
         <a class="dismiss">🗙</a>
     </div>
 
-
     <script src="_framework/blazor.webassembly.js"></script>
+
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/chart.min.js"></script>
     <script src="assets/js/script.min.js"></script>
-
+    <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
     <script src="_content/BlazorDateRangePicker/clickAndPositionHandler.js"></script>
 
     <!-- Reference the included moment.js javascript file. -->
@@ -41,6 +41,8 @@
 
     <!-- Some styling -->
     <link rel="stylesheet" href="_content/ChartJs.Blazor/ChartJSBlazor.css" />
+   
+    
     <script>
         window.initializeCarousel = () => {
             $('#carouselExampleIndicators').carousel({ interval: false });
@@ -51,6 +53,52 @@
             $('#carouselExampleIndicators-next').click(
                 () => $('#carouselExampleIndicators').carousel('next'));
 
+        };
+
+        window.temperature = (latest, highest, lowest) => {
+
+            const units = {
+                Celcius: "°C",
+                Fahrenheit: "°F"
+            };
+
+            const config = {
+                minTemp: -10.0,
+                maxTemp: 50.0,
+                unit: "Celcius"
+            };
+
+            
+            // Switch unit of temperature
+
+            const unitP = document.getElementById("unit");
+
+            unitP.addEventListener("click", () => {
+                config.unit = config.unit === "Celcius" ? "Fahrenheit" : "Celcius";
+                unitP.innerHTML = config.unit + ' ' + units[config.unit];
+                return setTemperature();
+            })
+
+            // Change temperature
+
+            const latestTemperature = document.getElementById("latestTemperature");
+            const highestTemperature = document.getElementById("highestTemperature");
+            const lowestTemperature = document.getElementById("lowestTemperature");
+
+
+            function setTemperature() {
+                highestTemperature.style.height = (highest - config.minTemp) / (config.maxTemp - config.minTemp) * 100.0 + "%";
+                highestTemperature.dataset.value = highest + units[config.unit];
+
+                latestTemperature.style.height = (latest - config.minTemp) / (config.maxTemp - config.minTemp) * 100.0 + "%";
+                latestTemperature.dataset.value = latest + units[config.unit];
+
+
+                lowestTemperature.style.height = (lowest - config.minTemp) / (config.maxTemp - config.minTemp) * 100.0 + "%";
+                lowestTemperature.dataset.value = lowest + units[config.unit];
+            }
+
+            setTimeout(setTemperature, 1000);
         }
 
 

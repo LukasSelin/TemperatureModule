@@ -24,14 +24,12 @@
     public EventCallback<TItem> OnSelected { get; set; }
 
     private bool show = false;
-    private RenderFragment Tip;
+
+    [Parameter]
+    public RenderFragment Tip { get; set; }
 
     protected override void OnInitialized() { this.Tip = InitialTip; }
 
-    protected async Task OnParametersSetAsync()
-    {
-        this.Tip = 
-    }
 
     public async Task HandleSelect(TItem item, RenderFragment<TItem> contentFragment)
     {
