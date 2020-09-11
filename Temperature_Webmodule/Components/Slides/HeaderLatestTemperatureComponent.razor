@@ -7,13 +7,16 @@
         padding-left: 20px;
         padding-right: 20px;
         font-size: 24px;
-        border-bottom: 1px solid rgba(0,0,0,.125);        display: flex;
+        border-bottom: 1px solid rgba(0,0,0,.125);
+        display: flex;
         flex-direction: row;
-        align-items:baseline;        flex-wrap:wrap;">
-    <strong class="order-1">Latest @_medium temperature:</strong>
-    <p class="order-3">
+        align-items:baseline;
+        flex-wrap:wrap;
+">
+    <strong class="order-1">@_medium temperature:</strong>
+    @*<p class="order-3">
         &nbsp;<strong>@Latest.DataPTValue°C</strong>&nbsp;
-    </p>
+    </p>*@
 </div>
 
 @code {
@@ -23,6 +26,6 @@
     [Parameter]
     public PTIndex PTIndex { get; set; }
 
-    private string _medium { get { return PTIndex == PTIndex.Water ? "water" : "air"; } }
+    private string _medium { get { return PTIndex == PTIndex.Water ? "Water" : "Air"; } }
 
 }

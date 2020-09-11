@@ -10,7 +10,7 @@ body {
 .box {
     background-color: #37474f;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    width: 50ch
+    width: 35ch
 }
 
 .records {
@@ -18,12 +18,19 @@ body {
     flex-direction: column;
     border: 1px solid rgba(0,0,0,.125);
     border-radius: 5px;
+    align-items: center;
+    margin: .5em;
+    justify-content: center;
+    align-items: center;
 }
 
 .graph {
     padding: 12px;
     border-radius: 5px;
-    width: 100%
+    width: 95%;
+    margin:auto;
+    min-height: 250px
+        
 }
 
 .row {
@@ -38,4 +45,13 @@ body {
 }
 .ui-progressbar-value {
     background-color: #1e5f74;
+}
+
+.carousel-control-prev
+{
+    left: -2%
+}
+
+.carousel-control-next {
+    right: -2%
 }

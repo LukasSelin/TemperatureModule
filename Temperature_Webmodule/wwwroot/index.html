@@ -55,47 +55,36 @@
 
         };
 
-        window.temperature = (latest, highest, lowest) => {
+        window.temperature = (latest, highest, lowest, id) => {
 
             const units = {
-                Celcius: "°C",
-                Fahrenheit: "°F"
+                Celcius: " °C",
+                Fahrenheit: " °F"
             };
 
             const config = {
-                minTemp: -10.0,
+                minTemp: 2.0,
                 maxTemp: 50.0,
                 unit: "Celcius"
             };
 
-            
-            // Switch unit of temperature
-
-            const unitP = document.getElementById("unit");
-
-            unitP.addEventListener("click", () => {
-                config.unit = config.unit === "Celcius" ? "Fahrenheit" : "Celcius";
-                unitP.innerHTML = config.unit + ' ' + units[config.unit];
-                return setTemperature();
-            })
-
             // Change temperature
 
-            const latestTemperature = document.getElementById("latestTemperature");
-            const highestTemperature = document.getElementById("highestTemperature");
-            const lowestTemperature = document.getElementById("lowestTemperature");
+            const latestTemperature = document.getElementById(id +"-latestTemperature");
+            const highestTemperature = document.getElementById(id +"-highestTemperature");
+            const lowestTemperature = document.getElementById(id +"-lowestTemperature");
 
+            console.log(latestTemperature);
 
             function setTemperature() {
-                highestTemperature.style.height = (highest - config.minTemp) / (config.maxTemp - config.minTemp) * 100.0 + "%";
-                highestTemperature.dataset.value = highest + units[config.unit];
-
                 latestTemperature.style.height = (latest - config.minTemp) / (config.maxTemp - config.minTemp) * 100.0 + "%";
-                latestTemperature.dataset.value = latest + units[config.unit];
+                latestTemperature.dataset.value = "Latest: " + latest + units[config.unit];
 
+                highestTemperature.style.height = (highest - config.minTemp) / (config.maxTemp - config.minTemp) * 100.0 + "%";
+                highestTemperature.dataset.value = "Highest: " + highest + units[config.unit];
 
                 lowestTemperature.style.height = (lowest - config.minTemp) / (config.maxTemp - config.minTemp) * 100.0 + "%";
-                lowestTemperature.dataset.value = lowest + units[config.unit];
+                lowestTemperature.dataset.value = "Lowest: " + lowest + units[config.unit];
             }
 
             setTimeout(setTemperature, 1000);

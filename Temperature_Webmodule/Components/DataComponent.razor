@@ -5,9 +5,11 @@
 @using TemperatureModule.Webpage.Components.DataControllPanel
 @using TemperatureModule.Webpage.Components.Slides
 
+<div style="display:flex; flex-direction:column;">
 
-<ControllPanelComponent DateUpdated="DateUpdated" SelectUpdated="@FilterUpdated" StartDate="StartDate" EndDate="EndDate" />
-<CarouselComponent UnitData="UnitData"></CarouselComponent>
+    <ControllPanelComponent DateUpdated="DateUpdated" SelectUpdated="@FilterUpdated" StartDate="StartDate" EndDate="EndDate" />
+    <CarouselComponent UnitData="UnitData"></CarouselComponent>
+</div>
 
 @code {
     public TempraturModul.Models.TempratureDTO[] UnitData { get; set; }

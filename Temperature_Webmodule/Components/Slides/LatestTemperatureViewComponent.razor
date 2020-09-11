@@ -1,35 +1,29 @@
-﻿@using  TempraturModul.Models
-@using TemperatureModule.Webpage.Models
-
-
-
-
+﻿@using TemperatureModule.Webpage.Models
 
 @if (unitData != null)
 {
-    <div id="records" style="display:flex; flex-direction:row; flex-wrap: wrap">
+    <div id="records" style="display:flex; flex-direction:row; flex-wrap: wrap; justify-content:center">
 
         <div id="airRecords" class="order-0 records box">
 
             <HeaderLatestTemperatureComponent Latest="@_airTemperatureUnit.Latest" PTIndex="PTIndex.Air"></HeaderLatestTemperatureComponent>
-
-            <TemperatureListingComponent data="@_airTemperatureUnit.Highest" IsHighest="true" PTIndex="PTIndex.Air"></TemperatureListingComponent>
-            <TemperatureListingComponent data="@_airTemperatureUnit.Lowest" IsHighest="false" PTIndex="PTIndex.Air"></TemperatureListingComponent>
+            <TermometerComponent temperatureUnit="@_airTemperatureUnit" mediumType="PTIndex.Air"></TermometerComponent>
             <AverageTemperatureComponent Average="@_airTemperatureUnit.Average" PTIndex="PTIndex.Air"></AverageTemperatureComponent>
 
-            <TermometerComponent temperatureUnit="@_airTemperatureUnit"></TermometerComponent>
+            @*<TemperatureListingComponent data="@_airTemperatureUnit.Highest" IsHighest="true" PTIndex="PTIndex.Air"></TemperatureListingComponent>
+            <TemperatureListingComponent data="@_airTemperatureUnit.Lowest" IsHighest="false" PTIndex="PTIndex.Air"></TemperatureListingComponent>*@
+
 
         </div>
-
-        <div style="margin: 5px"></div>
 
         <div id="waterRecords" class="order-2 records box">
 
             <HeaderLatestTemperatureComponent Latest="@_waterTemperatureUnit.Latest" PTIndex="PTIndex.Water"></HeaderLatestTemperatureComponent>
-
-            <TemperatureListingComponent data="@_waterTemperatureUnit.Highest" IsHighest="true" PTIndex="PTIndex.Water"></TemperatureListingComponent>
-            <TemperatureListingComponent data="@_waterTemperatureUnit.Lowest" IsHighest="false" PTIndex="PTIndex.Water"></TemperatureListingComponent>
+            <TermometerComponent temperatureUnit="@_waterTemperatureUnit" mediumType="PTIndex.Water"></TermometerComponent>
             <AverageTemperatureComponent Average="@_waterTemperatureUnit.Average" PTIndex="PTIndex.Water"></AverageTemperatureComponent>
+
+            @*<TemperatureListingComponent data="@_waterTemperatureUnit.Highest" IsHighest="true" PTIndex="PTIndex.Water"></TemperatureListingComponent>
+            <TemperatureListingComponent data="@_waterTemperatureUnit.Lowest" IsHighest="false" PTIndex="PTIndex.Water"></TemperatureListingComponent>*@
 
         </div>
     </div>
@@ -40,7 +34,6 @@ else
         <strong>Loading</strong>
     </div>
 }
-
 
 
 @code {

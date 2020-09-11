@@ -5,9 +5,9 @@
 
 <div id="wrapper">
     <div id="termometer">
-        <div id="latestTemperature" style="height:0" data-value="Latest: @temperatureUnit.Latest.DataPTValue °C"></div>
-        <div id="highestTemperature" style="height:0" data-value="Highest: @temperatureUnit.Highest.DataPTValue °C"></div>
-        <div id="lowestTemperature" style="height:0" value="" data-value="Lowest: @temperatureUnit.Lowest.DataPTValue °C"></div>
+        <div id="@medium-latestTemperature" style="height:0" data-value="Latest: @temperatureUnit.Latest.DataPTValue °C"></div>
+        <div id="@medium-highestTemperature" style="height:0" data-value="Highest: @temperatureUnit.Highest.DataPTValue °C"></div>
+        <div id="@medium-lowestTemperature" style="height:0" data-value="Lowest: @temperatureUnit.Lowest.DataPTValue °C"></div>
 
         <div id="graduations"></div>
     </div>
@@ -15,7 +15,6 @@
     <div id="playground">
         <p id="unit">Celcius C°</p>
     </div>
-    <p id="info">Click on the values to change them!</p>
 </div>
 
 
@@ -23,13 +22,18 @@
     [Parameter]
     public LatestTemperatureUnit temperatureUnit { get; set; }
 
+    [Parameter]
+    public PTIndex mediumType { get; set; }
+
+
+    private int medium { get { return mediumType == PTIndex.Air ? 0 : 1; } }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            await jsRuntime.InvokeAsync<object>("temperature", 
-                temperatureUnit.Latest.DataPTValue, temperatureUnit.Highest.DataPTValue, temperatureUnit.Lowest.DataPTValue);
+            await jsRuntime.InvokeAsync<object>("temperature",
+                temperatureUnit.Latest.DataPTValue, temperatureUnit.Highest.DataPTValue, temperatureUnit.Lowest.DataPTValue, mediumType);
         }
     }
 }

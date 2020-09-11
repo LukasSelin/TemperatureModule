@@ -4,18 +4,23 @@
 
 @using TemperatureModule.Webpage.Components.DataControllPanel.Dropdown
 
+<div class="graph-controllpanel" style="        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+">
 
-<StyleSheet Resource="assets/css/myown/ControllPanel.css" Assembly="GetType().Assembly"></StyleSheet>
-<link rel="stylesheet" href="/assets/css/styles.min.css">
+    <h1 style="color: #f4f7f5; order:1; white-space:nowrap">Lövekulle camping</h1>
 
-<div class="graph-controllpanel" style="display:flex; flex-direction:row; flex-wrap:wrap">
+    <div style="order: 6; display:flex; flex-direction:row; justify-content:center; align-content: baseline; margin-left: 1em">
+        <DateRangePicker class="order-6 dateRangePicker" placeholder="@StartDate.GetValueOrDefault().DateTime.ToShortDateString()"
+                         ShowOnlyOneCalendar="true" SingleDatePicker="false" StartDate="StartDate" EndDate="EndDate" OnRangeSelect="OnDateSelected" Culture="culture" />
+        <div style="order:7">
+            <DropdownFilterComponent Tip="@dropdownTip" Filters="filterList" SelectUpdated="OnSelected" />
+        </div>
 
-    <h1 style="color: #f4f7f5; order:1">Lövekulle camping</h1>
 
-    <DateRangePicker class="order-6 dateRangePicker" placeholder="@StartDate.GetValueOrDefault().DateTime.ToShortDateString()"
-                     ShowOnlyOneCalendar="true" SingleDatePicker="false" StartDate="StartDate" EndDate="EndDate" OnRangeSelect="OnDateSelected" Culture="culture" />
-    <div style="order:7">
-        <DropdownFilterComponent Tip="@dropdownTip" Filters="filterList" SelectUpdated="OnSelected" />
     </div>
 </div>
 @code {

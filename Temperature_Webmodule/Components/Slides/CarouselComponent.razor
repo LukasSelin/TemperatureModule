@@ -6,23 +6,26 @@
 <div class="carousel slide" data-ride="carousel" data-interval="false" id="carouselExampleIndicators" style="min-height: 75px;">
     <div class="carousel-inner" role="listbox">
         <CascadingValue Value="UnitData">
-            <div class="carousel-item active" style="display:flex; flex-direction:column">
-
+            <div class="carousel-item active" style="        
+                    display: flex;
+                    flex-direction: column;
+                    align-content:center;
+                    justify-content:center;
+                    align-items:center;
+                    ">
                 <div style="order:1; border-radius:5px;">
-                    <LatestTemperatureViewComponent ></LatestTemperatureViewComponent>
+                    <LatestTemperatureViewComponent></LatestTemperatureViewComponent>
                 </div>
 
-                <div style="order:2;height: 15px"></div>
-
-                <div style="order:3; border-radius:5px">
-                    <GraphComponent/>
+                <div style="order:3; border-radius:5px; width: 100%">
+                    <GraphComponent />
                 </div>
 
             </div>
             <div class="carousel-item">
-                <TableViewComponent ></TableViewComponent>
+                <TableViewComponent></TableViewComponent>
             </div>
-            
+
         </CascadingValue>
     </div>
     <div>

@@ -17,6 +17,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 3ch;
 }
 
 p {
@@ -44,8 +45,8 @@ $TM-height: 240px;
 $TM-bulbSize: $TM-width * 2;
 $TM-radius: 20px;
 $TM-graduationsStyle: 2px solid rgba(0, 0, 0, 0.5);
-$TM-bulbColor: #3dcadf;
-$TM-mercuryColor: linear-gradient(#f17a65, $TM-bulbColor) no-repeat bottom;
+$TM-bulbColor: #3d8edf;
+$TM-mercuryColor: linear-gradient(#ff4242, $TM-bulbColor) no-repeat bottom;
 
 // Tooltip
 
@@ -120,7 +121,7 @@ $TM-tooltipArrowHeight: 2.2; // Higher numbers produce smaller height
         }
     }
 
-    #latestTemperature {
+    #0-latestTemperature {
         bottom: 0;
         background: $TM-mercuryColor;
         width: 100%;
@@ -142,21 +143,22 @@ $TM-tooltipArrowHeight: 2.2; // Higher numbers produce smaller height
             font-size: $TM-tooltipSize;
             line-height: 1;
             transform: translateY(50%);
-            left: calc(#{$TM-tooltipLeftShift} + 1em / #{$TM-tooltipArrowWidth});
+            right: calc(#{$TM-tooltipLeftShift} + 1em / #{$TM-tooltipArrowWidth});
             top: calc(-1em + #{$TM-tooltipTopShift} - #{$TM-tooltipVerticalPadding} * 2);
+            width: 8em;
         }
         // Tooltip arrow
         &:after {
             content: "";
             border-top: $TM-tooltipSize / $TM-tooltipArrowHeight solid transparent;
             border-bottom: $TM-tooltipSize / $TM-tooltipArrowHeight solid transparent;
-            border-right: $TM-tooltipSize / $TM-tooltipArrowWidth solid $TM-tooltipColor;
-            left: $TM-tooltipLeftShift;
+            border-left: $TM-tooltipSize / $TM-tooltipArrowWidth solid $TM-tooltipColor;
+            right: $TM-tooltipLeftShift;
             top: calc(-#{$TM-tooltipSize} / #{$TM-tooltipArrowHeight} + #{$TM-tooltipTopShift});
         }
     }
 
-    #highestTemperature {
+    #0-highestTemperature {
         bottom: 0;
         width: 100%;
         border-radius: $TM-radius;
@@ -179,6 +181,7 @@ $TM-tooltipArrowHeight: 2.2; // Higher numbers produce smaller height
             transform: translateY(50%);
             left: calc(#{$TM-tooltipLeftShift} + 1em / #{$TM-tooltipArrowWidth});
             top: calc(-1em + #{$TM-tooltipTopShift} - #{$TM-tooltipVerticalPadding} * 2);
+            width: 8.3em;
         }
         // Tooltip arrow
         &:after {
@@ -191,7 +194,80 @@ $TM-tooltipArrowHeight: 2.2; // Higher numbers produce smaller height
         }
     }
 
-    #lowestTemperature {
+    #0-lowestTemperature {
+        bottom: 0;
+        width: 120%;
+        border-radius: $TM-radius;
+        background-size: 100% $TM-height;
+        transition: all 0.2s ease-in-out;
+
+        &, &:before, &:after {
+            position: absolute;
+        }
+        // Temperature value - Tooltip
+        &:before {
+            content: attr(data-value);
+            background: $TM-tooltipColor;
+            color: white;
+            z-index: 2;
+            padding: $TM-tooltipVerticalPadding $TM-tooltipHorizontalPadding;
+            border-radius: $TM-tooltipRadius;
+            font-size: $TM-tooltipSize;
+            line-height: 1;
+            transform: translateY(50%);
+            left: calc(#{$TM-tooltipLeftShift} + 1em / #{$TM-tooltipArrowWidth});
+            top: calc(-1em + #{$TM-tooltipTopShift} - #{$TM-tooltipVerticalPadding} * 2);
+            width: 8em;
+        }
+        // Tooltip arrow
+        &:after {
+            content: "";
+            border-top: $TM-tooltipSize / $TM-tooltipArrowHeight solid transparent;
+            border-bottom: $TM-tooltipSize / $TM-tooltipArrowHeight solid transparent;
+            border-right: $TM-tooltipSize / $TM-tooltipArrowWidth solid $TM-tooltipColor;
+            left: $TM-tooltipLeftShift;
+            top: calc(-#{$TM-tooltipSize} / #{$TM-tooltipArrowHeight} + #{$TM-tooltipTopShift});
+        }
+    }
+
+    #1-latestTemperature {
+        bottom: 0;
+        background: $TM-mercuryColor;
+        width: 100%;
+        border-radius: $TM-radius;
+        background-size: 100% $TM-height;
+        transition: all 0.2s ease-in-out;
+
+        &, &:before, &:after {
+            position: absolute;
+        }
+        // Temperature value - Tooltip
+        &:before {
+            content: attr(data-value);
+            background: $TM-tooltipColor;
+            color: white;
+            z-index: 2;
+            padding: $TM-tooltipVerticalPadding $TM-tooltipHorizontalPadding;
+            border-radius: $TM-tooltipRadius;
+            font-size: $TM-tooltipSize;
+            line-height: 1;
+            transform: translateY(50%);
+            right: calc(#{$TM-tooltipLeftShift} + 1em / #{$TM-tooltipArrowWidth});
+            top: calc(-1em + #{$TM-tooltipTopShift} - #{$TM-tooltipVerticalPadding} * 2);
+            width: 8em;
+        }
+        // Tooltip arrow
+        &:after {
+            content: "";
+            border-top: $TM-tooltipSize / $TM-tooltipArrowHeight solid transparent;
+            border-bottom: $TM-tooltipSize / $TM-tooltipArrowHeight solid transparent;
+            border-left: $TM-tooltipSize / $TM-tooltipArrowWidth solid $TM-tooltipColor;
+            right: $TM-tooltipLeftShift;
+            top: calc(-#{$TM-tooltipSize} / #{$TM-tooltipArrowHeight} + #{$TM-tooltipTopShift});
+        }
+    }
+
+    #1-highestTemperature {
         bottom: 0;
         width: 100%;
         border-radius: $TM-radius;
@@ -214,6 +290,43 @@ $TM-tooltipArrowHeight: 2.2; // Higher numbers produce smaller height
             transform: translateY(50%);
             left: calc(#{$TM-tooltipLeftShift} + 1em / #{$TM-tooltipArrowWidth});
             top: calc(-1em + #{$TM-tooltipTopShift} - #{$TM-tooltipVerticalPadding} * 2);
+            width: 8.3em;
+        }
+        // Tooltip arrow
+        &:after {
+            content: "";
+            border-top: $TM-tooltipSize / $TM-tooltipArrowHeight solid transparent;
+            border-bottom: $TM-tooltipSize / $TM-tooltipArrowHeight solid transparent;
+            border-right: $TM-tooltipSize / $TM-tooltipArrowWidth solid $TM-tooltipColor;
+            left: $TM-tooltipLeftShift;
+            top: calc(-#{$TM-tooltipSize} / #{$TM-tooltipArrowHeight} + #{$TM-tooltipTopShift});
+        }
+    }
+
+    #1-lowestTemperature {
+        bottom: 0;
+        width: 120%;
+        border-radius: $TM-radius;
+        background-size: 100% $TM-height;
+        transition: all 0.2s ease-in-out;
+
+        &, &:before, &:after {
+            position: absolute;
+        }
+        // Temperature value - Tooltip
+        &:before {
+            content: attr(data-value);
+            background: $TM-tooltipColor;
+            color: white;
+            z-index: 2;
+            padding: $TM-tooltipVerticalPadding $TM-tooltipHorizontalPadding;
+            border-radius: $TM-tooltipRadius;
+            font-size: $TM-tooltipSize;
+            line-height: 1;
+            transform: translateY(50%);
+            left: calc(#{$TM-tooltipLeftShift} + 1em / #{$TM-tooltipArrowWidth});
+            top: calc(-1em + #{$TM-tooltipTopShift} - #{$TM-tooltipVerticalPadding} * 2);
+            width: 8em;
         }
         // Tooltip arrow
         &:after {
