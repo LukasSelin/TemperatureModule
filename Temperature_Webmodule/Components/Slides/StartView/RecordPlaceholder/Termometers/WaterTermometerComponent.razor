@@ -1,4 +1,6 @@
-﻿@using TemperatureModule.Webpage.Models
+﻿@namespace TemperatureModule.Webpage.Components.Slides.StartView.RecordPlaceholder.Termometers
+
+@using TemperatureModule.Webpage.Models
 @inject IJSRuntime jsRuntime
 
 <link rel="stylesheet" href="css/myown/Termometer.css">
@@ -22,17 +24,9 @@
     [Parameter]
     public LatestTemperatureUnit temperatureUnit { get; set; }
 
-    [Parameter]
-    public PTIndex mediumType { get; set; }
-
-
-    private int medium { get { return mediumType == PTIndex.Air ? 0 : 1; } }
-
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        
         await jsRuntime.InvokeAsync<object>("waterTemperature",
             temperatureUnit.Latest.DataPTValue, temperatureUnit.Highest.DataPTValue, temperatureUnit.Lowest.DataPTValue);
-        
     }
 }

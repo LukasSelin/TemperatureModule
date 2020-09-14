@@ -1,16 +1,15 @@
 ﻿@using TemperatureModule.Webpage.Models
 @using TemperatureModule.Webpage.HelpClasses
+@using BlazorDateRangePicker;
 
 
 <Dropdown TItem="string" OnSelected="@OnSelected">
-    <InitialTip>@Tip</InitialTip>
     <Tip>@Tip</Tip>
     <ChildContent>
         @foreach (var label in Filters)
         {
             <DropdownListItem Item="@label">@label</DropdownListItem>
         }
-        @*<div class="dropdown-divider"></div>*@
     </ChildContent>
 </Dropdown>
 
@@ -29,5 +28,6 @@
         var filterEnum = FilterEnumHelper.GetFilterEnum(selection);
 
         await SelectUpdated.InvokeAsync(filterEnum);
+        StateHasChanged();
     }
 }

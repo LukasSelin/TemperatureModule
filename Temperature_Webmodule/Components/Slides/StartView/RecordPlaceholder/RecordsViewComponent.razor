@@ -1,0 +1,52 @@
+﻿@namespace TemperatureModule.Webpage.Components.Slides.StartView.RecordPlaceholder
+
+@using TemperatureModule.Webpage.Components.Slides.StartView.RecordPlaceholder.Termometers
+@using TemperatureModule.Webpage.Models;
+
+
+<link rel="stylesheet" href="css/myown/RecordView.css">
+
+@if (unitData != null)
+{
+    <div class="recordHolder">
+        <div id="airRecords" class="order-0 records box">
+
+            <HeaderLatestTemperatureComponent Latest="@_airTemperatureUnit.Latest" PTIndex="PTIndex.Air"></HeaderLatestTemperatureComponent>
+            <TermometerComponent temperatureUnit="@_airTemperatureUnit"></TermometerComponent>
+            <AverageTemperatureComponent Average="@_airTemperatureUnit.Average" PTIndex="PTIndex.Air"></AverageTemperatureComponent>
+
+        </div>
+
+        <div id="waterRecords" class="order-2 records box">
+
+            <HeaderLatestTemperatureComponent Latest="@_waterTemperatureUnit.Latest" PTIndex="PTIndex.Water"></HeaderLatestTemperatureComponent>
+            <WaterTermometerComponent temperatureUnit="@_waterTemperatureUnit"></WaterTermometerComponent>
+            <AverageTemperatureComponent Average="@_waterTemperatureUnit.Average" PTIndex="PTIndex.Water"></AverageTemperatureComponent>
+
+        </div>
+    </div>
+}
+
+
+
+@code {
+    [CascadingParameter]
+    public UnitData[] unitData { get; set; }
+
+    private TemperatureModule.Webpage.Models.LatestTemperatureUnit _airTemperatureUnit;
+    private TemperatureModule.Webpage.Models.LatestTemperatureUnit _waterTemperatureUnit;
+
+    protected override async Task OnParametersSetAsync()
+    {
+
+
+        if (unitData != null)
+        {
+            _airTemperatureUnit = new LatestTemperatureUnit(unitData.Where(e => e.PTIndex == (int)PTIndex.Air));
+            _waterTemperatureUnit = new LatestTemperatureUnit(unitData.Where(e => e.PTIndex == (int)PTIndex.Water));
+        }
+    }
+
+
+
+}

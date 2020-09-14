@@ -1,0 +1,15 @@
+﻿.graph {
+    padding: 12px;
+    border-radius: 5px;
+    width: 95%;
+    margin: auto;
+    min-height: 250px;
+    margin-left: 1.4em;
+    margin-right: 1.4em;
+}
+
+.row {
+    width: 99%;
+    color: #ffffff;
+    margin: auto;
+}

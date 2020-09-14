@@ -4,12 +4,11 @@
 @using ChartJs.Blazor.ChartJS.Common.Axes
 @using ChartJs.Blazor.ChartJS.Common.Time
 @using System.Linq
-@using TemperatureModuleDatasource
+@using TemperatureModule.Webpage.Models;
 
 @using System.Diagnostics
 
-<link rel="stylesheet" href="css/myown/Test.css">
-
+<link rel="stylesheet" href="css/myown/Graph.css">
 
 <div class="graph box">
     <ChartJsLineChart @ref="_lineChartJs" Config="@_lineChartConfig" Height="400"></ChartJsLineChart>
@@ -17,7 +16,7 @@
 
 @code {
     [CascadingParameter]
-    public TempraturModul.Models.TempratureDTO[] unitData { get; set; }
+    public UnitData[] unitData { get; set; }
 
     private LineConfig _lineChartConfig;
     private ChartJsLineChart _lineChartJs;
@@ -37,7 +36,7 @@
                 Scales = new Scales
                 {
                     xAxes = new List<CartesianAxis>
-            {
+        {
                         new TimeAxis
                         {
                             ScaleLabel = new ScaleLabel
@@ -52,7 +51,7 @@
                         }
                     },
                     yAxes = new List<CartesianAxis>
-                {
+            {
                         new LinearCartesianAxis
                         {
                             ScaleLabel = new ScaleLabel
@@ -76,8 +75,6 @@
     protected override async Task OnParametersSetAsync()
     {
         _lineChartConfig.Data.Datasets.Clear();
-
-
 
         var airTempratureDataset = new LineDataset<TimeTuple<double>>()
         {
@@ -103,7 +100,7 @@
 
         if (unitData != null)
         {
-            foreach (var dataPoint in unitData[0].UnitDataPT)
+            foreach (var dataPoint in unitData)
             {
                 if (dataPoint.PTIndex == 0)
                 {

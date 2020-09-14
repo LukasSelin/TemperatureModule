@@ -15,21 +15,15 @@
 
 @code {
     [Parameter]
-    public RenderFragment InitialTip { get; set; }
-
-    [Parameter]
     public RenderFragment ChildContent { get; set; }
 
     [Parameter]
     public EventCallback<TItem> OnSelected { get; set; }
 
-    private bool show = false;
-
     [Parameter]
     public RenderFragment Tip { get; set; }
-
-    protected override void OnInitialized() { this.Tip = InitialTip; }
-
+    
+    private bool show = false;
 
     public async Task HandleSelect(TItem item, RenderFragment<TItem> contentFragment)
     {

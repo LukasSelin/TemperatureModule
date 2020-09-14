@@ -1,0 +1,23 @@
+﻿.box {
+    background-color: #37474f;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.26), 0 3px 6px rgba(0,0,0,0.63);
+    width: 37ch
+}
+
+.records {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 5px;
+    align-items: center;
+    margin: .5em;
+    justify-content: center;
+    align-items: center;
+}
+
+.recordHolder {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center
+}

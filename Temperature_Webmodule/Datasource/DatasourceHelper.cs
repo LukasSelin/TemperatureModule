@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using TemperatureModule.Webpage.Datasource;
+using TemperatureModule.Webpage.Models;
 using TempraturModul.Models;
 
 namespace TemperatureModuleDatasourceHelper
 {
-    public class DatasourceHelper : IDataService
+    public class DatasourceHelper
     {
         private static string baseUrl = "https://localhost:44375/WiDetect/XTool_ISAPI.dll/datasnap/rest/TServerMethods1/GetUnitsData?";
 #warning exposed baseURL 
@@ -30,12 +30,7 @@ namespace TemperatureModuleDatasourceHelper
 
         private async Task<string> GetResponseAsync(string url)
         {
-
-
-            //var baseAdress = new Uri("https://widdev.wideco.se/WiDetect/XTool_ISAPI.dll/datasnap/rest/TServerMethods1/GetUnitsData?");
-            //client.BaseAddress = baseAdress;
             HttpResponseMessage response = await client.GetAsync(url);
-
 
             if (response.IsSuccessStatusCode)
             {
@@ -49,34 +44,16 @@ namespace TemperatureModuleDatasourceHelper
             }
         }
 
-
-        public async Task<TempratureDTO> GetTemperatureAsync(API_Inputs inputs)
+        public async Task<IEnumerable<UnitData>> GetTemperaturesAsync(API_Inputs inputs)
         {
             var requestURL = GetRequestURL(inputs);
             var response = await GetResponseAsync(requestURL);
 
-            Queue<TempratureDTO> temperatures = JsonConvert.DeserializeObject<Queue<TempratureDTO>>(response);
-
-            if (temperatures.Count == 1)
-            {
-                return temperatures.Dequeue();
-            }
-            else
-            {
-                throw new Exception("The response have more OR less than one temperature");
-            }
-        }
-
-        public async Task<IEnumerable<TempratureDTO>> GetTemperaturesAsync(API_Inputs inputs)
-        {
-            var requestURL = GetRequestURL(inputs);
-            var response = await GetResponseAsync(requestURL);
-
-            IEnumerable<TempratureDTO> temperatures = JsonConvert.DeserializeObject<IEnumerable<TempratureDTO>>(response);
+            TempratureDTO[] temperatures = JsonConvert.DeserializeObject<TempratureDTO[]>(response);
 
             if (temperatures.Any())
             {
-                return temperatures;
+                return temperatures.FirstOrDefault().UnitDataPT;
             }
             else
             {

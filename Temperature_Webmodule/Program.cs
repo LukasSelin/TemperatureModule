@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using TemperatureModule.Webpage;
 using TemperatureModule.Webpage.Datasource;
-using TemperatureModuleDatasource;
 
 namespace Temperature_Webmodule
 {
@@ -22,7 +21,7 @@ namespace Temperature_Webmodule
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:6001/") });
 
-            builder.Services.AddScoped<IDataService, Datasource>();
+            builder.Services.AddSingleton<Datasource>();
 
             await builder.Build().RunAsync();
         }

@@ -1,49 +1,43 @@
-﻿@using TemperatureModuleDatasource
-@using System.Diagnostics
+﻿@using TemperatureModule.Webpage.Components.Slides.StartView
+@using TemperatureModule.Webpage.Components.Slides.TableView
+@using TemperatureModule.Webpage.Models;
 
 @inject IJSRuntime JsRuntime
 
-<div class="carousel slide" data-ride="carousel" data-interval="false" id="carouselExampleIndicators" style="min-height: 75px;">
+<link rel="stylesheet" href="css/myown/Carousel.css">
+
+<div class="carousel slide" data-ride="carousel" data-interval="false" id="carouselIndicators">
     <div class="carousel-inner" role="listbox">
         <CascadingValue Value="UnitData">
-            <div class="carousel-item active" >
-                <div style="        
-                    display: flex;
-                    flex-direction: column;
-                    align-content:center;
-                    justify-content:center;
-                    align-items:center;
-                    ">
-
-                <div style="order:1; border-radius:5px;">
-                    <LatestTemperatureViewComponent></LatestTemperatureViewComponent>
-                </div>
-
-                <div style="order:3; border-radius:5px; width: 100%">
-                    <GraphComponent />
-                </div>
-                </div>
-
+            <div class="carousel-item active">
+                <StartViewComponent></StartViewComponent>
             </div>
             <div class="carousel-item">
                 <TableViewComponent></TableViewComponent>
             </div>
-
         </CascadingValue>
     </div>
+
     <div>
-        <a id="carouselExampleIndicators-prev" class="carousel-control-prev" role="button" data-slide="prev" style="width: 2rem; position:fixed; left: 0;"><span class="carousel-control-prev-icon"></span><span class="sr-only">Previous</span></a>
-        <a id="carouselExampleIndicators-next" class="carousel-control-next" role="button" data-slide="next" style="width: 2rem; position:fixed; right: 0"><span class="carousel-control-next-icon"></span><span class="sr-only">Next</span></a>
+        <a id="carouselIndicators-prev" class="carousel-control-prev" role="button" data-slide="prev" style="width: 2rem; position:fixed; left: 0;">
+            <span class="carousel-control-prev-icon"></span><span class="sr-only">Previous</span>
+        </a>
+
+        <a id="carouselIndicators-next" class="carousel-control-next" role="button" data-slide="next" style="width: 2rem; position:fixed; right: 0">
+            <span class="carousel-control-next-icon"></span><span class="sr-only">Next</span>
+        </a>
     </div>
+
     <ol class="carousel-indicators">
         <li data-target="#carousel-1" data-slide-to="0" class="active"></li>
         <li data-target="#carousel-1" data-slide-to="1"></li>
     </ol>
+
 </div>
 
 @code {
     [Parameter]
-    public TempraturModul.Models.TempratureDTO[] UnitData { get; set; }
+    public UnitData[] UnitData { get; set; }
 
 
     protected async override Task OnAfterRenderAsync(bool firstRender)

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TempraturModul.Models
+namespace TemperatureModule.Webpage.Models
 {
     public class UnitData
     {

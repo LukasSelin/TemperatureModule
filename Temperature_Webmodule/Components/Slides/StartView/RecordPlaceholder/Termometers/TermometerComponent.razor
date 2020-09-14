@@ -1,4 +1,6 @@
-﻿@using TemperatureModule.Webpage.Models
+﻿@namespace TemperatureModule.Webpage.Components.Slides.StartView.RecordPlaceholder.Termometers
+
+@using TemperatureModule.Webpage.Models
 @inject IJSRuntime jsRuntime
 
 <link rel="stylesheet" href="css/myown/Termometer.css">
@@ -21,9 +23,6 @@
 @code {
     [Parameter]
     public LatestTemperatureUnit temperatureUnit { get; set; }
-
-    [Parameter]
-    public PTIndex mediumType { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

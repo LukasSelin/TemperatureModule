@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TemperatureModule.Webpage.Models;
 
 namespace TempraturModul.Models
 {

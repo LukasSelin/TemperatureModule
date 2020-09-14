@@ -1,110 +1,47 @@
 ﻿@using System.Linq
-@using TemperatureModuleDatasource
+@using TemperatureModule.Webpage.Datasource;
 @using TemperatureModule.Webpage.Models
+@using BlazorDateRangePicker; 
 
 @using TemperatureModule.Webpage.Components.DataControllPanel
 @using TemperatureModule.Webpage.Components.Slides
 
-<div style="display:flex; flex-direction:column;">
 
-    <ControllPanelComponent DateUpdated="DateUpdated" SelectUpdated="@FilterUpdated" StartDate="StartDate" EndDate="EndDate" />
-    <CarouselComponent UnitData="UnitData"></CarouselComponent>
-</div>
+<link rel="stylesheet" href="css/myown/Data.css">
+@if(UnitData != null)
+{
+    <div class="data" style="display:flex; flex-direction:column;">
+        <ControllPanelComponent DateUpdated="DateUpdated"/>
+        <CarouselComponent UnitData="UnitData"></CarouselComponent>
+    </div>
+}
+else
+{
+    <div style="padding-top: 12px;padding-left: 20px;padding-bottom: 12px;font-size: 30px;border: 1px solid rgba(0,0,0,.125);">
+        <strong>Loading...</strong>
+    </div>
+}
 
 @code {
-    public TempraturModul.Models.TempratureDTO[] UnitData { get; set; }
+    public UnitData[] UnitData { get; set; }
 
-    public string Selection { get; set; } = "Today";
+    private Datasource _data;
 
-    public DateTimeOffset? StartDate { get; set; }
-    public DateTimeOffset? EndDate { get; set; }
-
-    public async Task DateUpdated(BlazorDateRangePicker.DateRange dateRange)
+    public async Task DateUpdated(DateRange dateRange)
     {
-        var data = new Datasource(new HttpClient());
-        UnitData = (await data.GetDaysAsync(dateRange.Start.DateTime, dateRange.End.DateTime)).ToArray();
+        UnitData = (await _data.GetDaysAsync(dateRange.Start.DateTime, dateRange.End.DateTime)).ToArray();
     }
 
-    // Todo add more support for more filters
-    public async Task FilterUpdated(FilterEnum selection)
-    {
-        var data = new Datasource(new HttpClient());
-
-        switch (selection)
-        {
-            case FilterEnum.Today:
-                var today = DateTime.Today;
-                UnitData = (await data.GetDayAsync(today)).ToArray();
-                StartDate = today;
-                EndDate = today;
-                break;
-
-            case FilterEnum.Yesterday:
-                var yesterday = DateTime.Today.AddDays(-1);
-                UnitData = (await data.GetDayAsync(yesterday)).ToArray();
-                StartDate = yesterday;
-                EndDate = yesterday;
-
-                break;
-
-            case FilterEnum.OneDay:
-                break;
-
-            case FilterEnum.ThreeDays:
-                var threedaySpan = DateTime.Today.AddDays(-3);
-                UnitData = (await data.GetDaysAsync(threedaySpan, DateTime.Today)).ToArray();
-                StartDate = threedaySpan;
-                EndDate = DateTime.Today;
-                break;
-
-            case FilterEnum.OneWeek:
-                var oneWeekOffset = DateTime.Today.AddDays(-7);
-                UnitData = (await data.GetDaysAsync(oneWeekOffset, DateTime.Today)).ToArray();
-                //StartDate = oneWeekOffset;
-                //EndDate = DateTime.Today;
-                break;
-
-            case FilterEnum.TwoWeeks:
-                var twoWeeksOffset = DateTime.Today.AddDays(-14);
-                UnitData = (await data.GetDaysAsync(twoWeeksOffset, DateTime.Today)).ToArray();
-                StartDate = twoWeeksOffset;
-                EndDate = DateTime.Today;
-                break;
-
-            case FilterEnum.OneMonth:
-                var oneMonthOffset = DateTime.Today.AddMonths(-1);
-                UnitData = (await data.GetDaysAsync(oneMonthOffset, DateTime.Today)).ToArray();
-                StartDate = oneMonthOffset;
-                EndDate = DateTime.Today;
-                break;
-
-            case FilterEnum.ThreeMonths:
-                var threeMonthsOffset = DateTime.Today.AddMonths(-3);
-                UnitData = (await data.GetDaysAsync(threeMonthsOffset, DateTime.Today)).ToArray();
-                StartDate = threeMonthsOffset;
-                EndDate = DateTime.Today;
-                break;
-
-            case FilterEnum.OneYear:
-                var oneYearOffset = DateTime.Today.AddYears(-1);
-                UnitData = (await data.GetDaysAsync(oneYearOffset, DateTime.Today)).ToArray();
-                StartDate = oneYearOffset;
-                EndDate = DateTime.Today;
-                break;
-        }
-    }
-
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         try
         {
-            var data = new Datasource(new HttpClient());
-            UnitData = (await data.GetDayAsync(DateTime.Now)).ToArray();
-            StartDate = DateTime.Today;
+            _data = new Datasource(new HttpClient());
+            UnitData = (await _data.GetDayAsync(DateTime.Now)).ToArray();
         }
         catch
         {
-            System.Diagnostics.Debug.WriteLine("Nu var vi här");
+            throw new HttpRequestException("Error when gathering data");
         }
     }
 }

@@ -1,5 +1,8 @@
-﻿<link rel="stylesheet" href="css/myown/TableView.css">
+﻿@namespace TemperatureModule.Webpage.Components.Slides.TableView
 
+@using TemperatureModule.Webpage.Models;
+
+<link rel="stylesheet" href="css/myown/TableView.css">
 
 <div class="table-responsive">
     <table class="table table-striped table-hover">
@@ -12,11 +15,11 @@
         <tbody>
             @if (unitData != null)
             {
-                @for (int i = unitData[0].UnitDataPT.Count - 1; 0 < i; i--)
+                @for (int i = unitData.Count() - 1; 0 < i; i--)
                 {
                     <tr>
-                        <td>@unitData[0].UnitDataPT[i].DataDateTime.ToShortTimeString()</td>
-                        <td>@unitData[0].UnitDataPT[i].DataPTValue</td>
+                        <td>@unitData[i].DataDateTime.ToShortTimeString()</td>
+                        <td>@unitData[i].DataPTValue</td>
                     </tr>
                 }
             }
@@ -26,6 +29,6 @@
 
 @code {
     [CascadingParameter]
-    public TempraturModul.Models.TempratureDTO[] unitData { get; set; }
+    public UnitData[] unitData { get; set; }
 
 }

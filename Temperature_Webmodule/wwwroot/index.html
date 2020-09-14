@@ -14,7 +14,13 @@
 </head>
 
 <body>
-    <app>Loading...</app>
+    <app>
+        <div style="padding-top: 12px;padding-left: 20px;padding-bottom: 12px;font-size: 30px;border: 1px solid rgba(0,0,0,.125);">
+            <strong>Loading...</strong>
+        </div>
+    </app>
+
+
     <div id="blazor-error-ui">
         An unhandled error has occurred.
         <a href="" class="reload">Reload</a>
@@ -45,13 +51,13 @@
     
     <script>
         window.initializeCarousel = () => {
-            $('#carouselExampleIndicators').carousel({ interval: false });
+            $('#carouselIndicators').carousel({ interval: false });
 
             //see step 2 to understand these news id's:
-            $('#carouselExampleIndicators-prev').click(
-                () => $('#carouselExampleIndicators').carousel('prev'));
-            $('#carouselExampleIndicators-next').click(
-                () => $('#carouselExampleIndicators').carousel('next'));
+            $('#carouselIndicators-prev').click(
+                () => $('#carouselIndicators').carousel('prev'));
+            $('#carouselIndicators-next').click(
+                () => $('#carouselIndicators').carousel('next'));
 
         };
 
@@ -95,7 +101,7 @@
                 }
 
                 console.log(lowestTemperature.dataset.value);
-                if (lowest + 1 < latest && lowest + 1 < highest) {
+                if (lowest < latest && lowest + 1 < highest) {
                     lowestTemperature.style.visibility = "visible"
 
                     lowestTemperature.style.height = (lowest - config.minTemp) / (config.maxTemp - config.minTemp) * 100.0 + "%";
@@ -150,7 +156,7 @@
 
 
                 console.log(lowestTemperature.dataset.value);
-                if (lowest + 1 < latest && lowest + 1 < highest) {
+                if (lowest < latest && lowest + 1 < highest) {
                     lowestTemperature.style.visibility = "visible"
 
                     lowestTemperature.style.height = (lowest - config.minTemp) / (config.maxTemp - config.minTemp) * 100.0 + "%";

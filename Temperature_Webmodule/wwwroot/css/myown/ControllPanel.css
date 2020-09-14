@@ -1,7 +1,35 @@
-﻿.dateRangePicker {
-    margin-right: 5px; 
+﻿.controlPanel {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center
+}
+
+.controlPanel h1 {
+    color: #f4f7f5;
+    order: 1;
+    white-space: nowrap
+}
+
+.controlPanel .filter {
+    order: 2;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: baseline;
+    margin-left: 1em
+}
+
+.controlPanel .filter .dateRangePicker {
+    margin-right: 5px;
     border: 1px solid #ced4da;
     border-radius: .25rem;
     text-align: center;
     width: calc(12em + 2px);
+    order: 1;
+}
+
+.controlPanel .filter .dropdown {
+    order: 2;
 }

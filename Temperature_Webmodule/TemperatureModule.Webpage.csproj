@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <RazorLangVersion>3.0</RazorLangVersion>
+    <UserSecretsId>0e059cc5-2801-46af-b7fe-ac56ba71e463</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,8 +17,6 @@
     <PackageReference Include="Radzen.Blazor" Version="2.11.19" />
     <PackageReference Include="System.Net.Http.Json" Version="3.2.1" />
   </ItemGroup>
-  
-  
 
 </Project>
   

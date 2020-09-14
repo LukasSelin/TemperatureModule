@@ -45,9 +45,6 @@ namespace TemperatureModule.Webpage.HelpClasses
 
                     break;
 
-                case FilterEnum.OneDay:
-                    break;
-
                 case FilterEnum.ThreeDays:
                     var threedaySpan = DateTime.Today.AddDays(-3);
                     dateRange.Start = threedaySpan;

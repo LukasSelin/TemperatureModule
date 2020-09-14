@@ -4,7 +4,6 @@
     {
         Today,
         Yesterday,
-        OneDay,
         ThreeDays,
         OneWeek,
         TwoWeeks,
