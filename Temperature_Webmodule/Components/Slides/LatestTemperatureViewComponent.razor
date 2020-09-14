@@ -19,7 +19,7 @@
         <div id="waterRecords" class="order-2 records box">
 
             <HeaderLatestTemperatureComponent Latest="@_waterTemperatureUnit.Latest" PTIndex="PTIndex.Water"></HeaderLatestTemperatureComponent>
-            <TermometerComponent temperatureUnit="@_waterTemperatureUnit" mediumType="PTIndex.Water"></TermometerComponent>
+            <WaterTermometerComponent temperatureUnit="@_waterTemperatureUnit" mediumType="PTIndex.Water"></WaterTermometerComponent>
             <AverageTemperatureComponent Average="@_waterTemperatureUnit.Average" PTIndex="PTIndex.Water"></AverageTemperatureComponent>
 
             @*<TemperatureListingComponent data="@_waterTemperatureUnit.Highest" IsHighest="true" PTIndex="PTIndex.Water"></TemperatureListingComponent>

@@ -5,12 +5,18 @@
 body {
     background-color: transparent;
     color: #ffffff;
+    width: 99%;
+    margin: auto;
 }
 
 .box {
     background-color: #37474f;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    width: 35ch
+    width: 40ch
+}
+
+.carousel-indicators {
+    margin-bottom: -2rem;
 }
 
 .records {
@@ -30,12 +36,12 @@ body {
     width: 95%;
     margin:auto;
     min-height: 250px
-        
 }
 
 .row {
     width: 99%;
     color: #ffffff;
+    margin: auto;
 }
 
 .ui-progressbar {

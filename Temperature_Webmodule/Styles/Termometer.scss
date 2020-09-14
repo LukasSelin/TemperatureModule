@@ -121,7 +121,7 @@ $TM-tooltipArrowHeight: 2.2; // Higher numbers produce smaller height
         }
     }
 
-    #0-latestTemperature {
+    #air-latestTemperature {
         bottom: 0;
         background: $TM-mercuryColor;
         width: 100%;
@@ -158,7 +158,7 @@ $TM-tooltipArrowHeight: 2.2; // Higher numbers produce smaller height
         }
     }
 
-    #0-highestTemperature {
+    #air-highestTemperature {
         bottom: 0;
         width: 100%;
         border-radius: $TM-radius;
@@ -194,7 +194,7 @@ $TM-tooltipArrowHeight: 2.2; // Higher numbers produce smaller height
         }
     }
 
-    #0-lowestTemperature {
+    #air-lowestTemperature {
         bottom: 0;
         width: 120%;
         border-radius: $TM-radius;
@@ -230,7 +230,7 @@ $TM-tooltipArrowHeight: 2.2; // Higher numbers produce smaller height
         }
     }
 
-    #1-latestTemperature {
+    #water-latestTemperature {
         bottom: 0;
         background: $TM-mercuryColor;
         width: 100%;
@@ -267,7 +267,7 @@ $TM-tooltipArrowHeight: 2.2; // Higher numbers produce smaller height
         }
     }
 
-    #1-highestTemperature {
+    #water-highestTemperature {
         bottom: 0;
         width: 100%;
         border-radius: $TM-radius;
@@ -303,7 +303,7 @@ $TM-tooltipArrowHeight: 2.2; // Higher numbers produce smaller height
         }
     }
 
-    #1-lowestTemperature {
+    #water-lowestTemperature {
         bottom: 0;
         width: 120%;
         border-radius: $TM-radius;

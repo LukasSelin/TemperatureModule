@@ -1,0 +1,19 @@
+﻿body {
+}
+
+.table {
+    color: #f4f7f5;
+    width: 40rem;
+    margin: auto;
+    background-color: #37474f;
+    border-radius: 5px;
+}
+
+.table thead th {
+    border-bottom: 2px solid #f4f7f5;
+    border-top: none 
+}
+
+.table-hover tbody tr:hover {
+    color: bisque;
+}

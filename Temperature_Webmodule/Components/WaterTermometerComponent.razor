@@ -5,9 +5,9 @@
 
 <div id="wrapper">
     <div id="termometer">
-        <div id="air-latestTemperature" style="height:0" data-value="@temperatureUnit.Latest.DataPTValue"></div>
-        <div id="air-highestTemperature" style="height:0" data-value="@temperatureUnit.Highest.DataPTValue"></div>
-        <div id="air-lowestTemperature" style="height:0" data-value="@temperatureUnit.Lowest.DataPTValue"></div>
+        <div id="water-latestTemperature" style="height:0" data-value="@temperatureUnit.Latest.DataPTValue"></div>
+        <div id="water-highestTemperature" style="height:0" data-value="@temperatureUnit.Highest.DataPTValue"></div>
+        <div id="water-lowestTemperature" style="height:0" data-value="@temperatureUnit.Lowest.DataPTValue"></div>
 
         <div id="graduations"></div>
     </div>
@@ -25,9 +25,14 @@
     [Parameter]
     public PTIndex mediumType { get; set; }
 
+
+    private int medium { get { return mediumType == PTIndex.Air ? 0 : 1; } }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await jsRuntime.InvokeAsync<object>("airTemperature",
+        
+        await jsRuntime.InvokeAsync<object>("waterTemperature",
             temperatureUnit.Latest.DataPTValue, temperatureUnit.Highest.DataPTValue, temperatureUnit.Lowest.DataPTValue);
+        
     }
 }

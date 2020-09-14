@@ -1,15 +1,18 @@
-﻿<div class="table-responsive" style="background-color: #1f2833;color: #c5c6c7;min-height: 250px;max-height: 650px;">
+﻿<link rel="stylesheet" href="css/myown/TableView.css">
+
+
+<div class="table-responsive">
     <table class="table table-striped table-hover">
         <thead>
             <tr>
-                <th style="border-style: none;border-color: rgba(197,198,199,0);">Tidpunkt</th>
-                <th style="border-color: rgba(197,198,199,0);">Temperatur (°C)</th>
+                <th>Tidpunkt</th>
+                <th>Temperatur (°C)</th>
             </tr>
         </thead>
         <tbody>
-            @if(unitData != null)
+            @if (unitData != null)
             {
-                @for(int i = unitData[0].UnitDataPT.Count - 1; 0 < i; i--)
+                @for (int i = unitData[0].UnitDataPT.Count - 1; 0 < i; i--)
                 {
                     <tr>
                         <td>@unitData[0].UnitDataPT[i].DataDateTime.ToShortTimeString()</td>
@@ -19,19 +22,6 @@
             }
         </tbody>
     </table>
-</div>
-<div class="pagination" style="height: 41px;">
-    <nav>
-        <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">4</a></li>
-            <li class="page-item"><a class="page-link" href="#">5</a></li>
-            <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
-        </ul>
-    </nav>
 </div>
 
 @code {

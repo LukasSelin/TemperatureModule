@@ -55,7 +55,7 @@
 
         };
 
-        window.temperature = (latest, highest, lowest, id) => {
+        window.waterTemperature = (latest, highest, lowest) => {
 
             const units = {
                 Celcius: " °C",
@@ -70,21 +70,96 @@
 
             // Change temperature
 
-            const latestTemperature = document.getElementById(id +"-latestTemperature");
-            const highestTemperature = document.getElementById(id +"-highestTemperature");
-            const lowestTemperature = document.getElementById(id +"-lowestTemperature");
+            const latestTemperature = document.getElementById("water-latestTemperature");
+            const highestTemperature = document.getElementById("water-highestTemperature");
+            const lowestTemperature = document.getElementById("water-lowestTemperature");
+
+            console.log(latestTemperature);
+
+            function setTemperature() {
+                console.log(latestTemperature.dataset.value);
+
+                latestTemperature.style.height = (latest - config.minTemp) / (config.maxTemp - config.minTemp) * 100.0 + "%";
+                latestTemperature.dataset.value = "Latest: " + latest + units[config.unit];
+
+                console.log(highestTemperature.dataset.value);
+                if (latest + 1 < highest) {
+                    highestTemperature.style.visibility = "visible"
+
+                    highestTemperature.style.height = (highest - config.minTemp) / (config.maxTemp - config.minTemp) * 100.0 + "%";
+                    highestTemperature.dataset.value = "Highest: " + highest + units[config.unit];
+                    console.log(highestTemperature.style.height);
+                }
+                else {
+                    highestTemperature.style.visibility = "hidden";
+                }
+
+                console.log(lowestTemperature.dataset.value);
+                if (lowest + 1 < latest && lowest + 1 < highest) {
+                    lowestTemperature.style.visibility = "visible"
+
+                    lowestTemperature.style.height = (lowest - config.minTemp) / (config.maxTemp - config.minTemp) * 100.0 + "%";
+                    lowestTemperature.dataset.value = "Lowest: " + lowest + units[config.unit];
+                }
+                else {
+                    lowestTemperature.style.visibility = "hidden"
+                }
+
+            }
+
+            setTimeout(setTemperature, 1000);
+        }
+
+        window.airTemperature = (latest, highest, lowest) => {
+
+            const units = {
+                Celcius: " °C",
+                Fahrenheit: " °F"
+            };
+
+            const config = {
+                minTemp: 2.0,
+                maxTemp: 50.0,
+                unit: "Celcius"
+            };
+
+            // Change temperature
+
+            const latestTemperature = document.getElementById("air-latestTemperature");
+            const highestTemperature = document.getElementById("air-highestTemperature");
+            const lowestTemperature = document.getElementById("air-lowestTemperature");
 
             console.log(latestTemperature);
 
             function setTemperature() {
                 latestTemperature.style.height = (latest - config.minTemp) / (config.maxTemp - config.minTemp) * 100.0 + "%";
                 latestTemperature.dataset.value = "Latest: " + latest + units[config.unit];
+                console.log(latestTemperature.style.height);
 
-                highestTemperature.style.height = (highest - config.minTemp) / (config.maxTemp - config.minTemp) * 100.0 + "%";
-                highestTemperature.dataset.value = "Highest: " + highest + units[config.unit];
+                console.log(highestTemperature.dataset.value);
+                if (latest + 1 < highest) {
+                    highestTemperature.style.visibility = "visible"
 
-                lowestTemperature.style.height = (lowest - config.minTemp) / (config.maxTemp - config.minTemp) * 100.0 + "%";
-                lowestTemperature.dataset.value = "Lowest: " + lowest + units[config.unit];
+                    highestTemperature.style.height = (highest - config.minTemp) / (config.maxTemp - config.minTemp) * 100.0 + "%";
+                    highestTemperature.dataset.value = "Highest: " + highest + units[config.unit];
+                    console.log(highestTemperature.style.height);
+                }
+                else {
+                    highestTemperature.style.visibility = "hidden"
+                }
+
+
+                console.log(lowestTemperature.dataset.value);
+                if (lowest + 1 < latest && lowest + 1 < highest) {
+                    lowestTemperature.style.visibility = "visible"
+
+                    lowestTemperature.style.height = (lowest - config.minTemp) / (config.maxTemp - config.minTemp) * 100.0 + "%";
+                    lowestTemperature.dataset.value = "Lowest: " + lowest + units[config.unit];
+                    console.log(lowestTemperature.style.height);
+                }
+                else {
+                    lowestTemperature.style.visibility = "hidden"
+                }
             }
 
             setTimeout(setTemperature, 1000);
