@@ -1,18 +1,13 @@
-using System;
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Text;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using System;
+using System.Globalization;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using TemperatureModule.Webpage;
 using TemperatureModule.Webpage.Datasource;
 using TemperatureModuleDatasource;
-using System.Threading;
-using System.Globalization;
 
 namespace Temperature_Webmodule
 {
@@ -28,7 +23,7 @@ namespace Temperature_Webmodule
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:6001/") });
 
             builder.Services.AddScoped<IDataService, Datasource>();
-            
+
             await builder.Build().RunAsync();
         }
     }

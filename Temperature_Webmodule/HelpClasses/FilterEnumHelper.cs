@@ -1,8 +1,6 @@
 ﻿using BlazorDateRangePicker;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using TemperatureModule.Webpage.Models;
 
 namespace TemperatureModule.Webpage.HelpClasses
@@ -11,7 +9,7 @@ namespace TemperatureModule.Webpage.HelpClasses
     {
         public static FilterEnum GetFilterEnum(string filterLabel)
         {
-            if(Char.IsDigit(filterLabel[0]))
+            if (Char.IsDigit(filterLabel[0]))
             {
                 var number = Convert.ToInt32(filterLabel[0].ToString());
                 var numberInLabel = GetWrittenformat(number);

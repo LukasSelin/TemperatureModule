@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using TempraturModul.Models;
-using System.Threading.Tasks;
-using TemperatureModuleDatasourceHelper;
-using TemperatureModule.Webpage.Datasource;
 using System.Net.Http;
+using System.Threading.Tasks;
+using TemperatureModule.Webpage.Datasource;
+using TemperatureModuleDatasourceHelper;
+using TempraturModul.Models;
 
 namespace TemperatureModuleDatasource
 {
@@ -65,7 +65,7 @@ namespace TemperatureModuleDatasource
         public async Task<IEnumerable<TempratureDTO>> GetWeekAsync(DateTime date)
         {
             int offsetDays;
-            if(date.DayOfWeek != DayOfWeek.Sunday)
+            if (date.DayOfWeek != DayOfWeek.Sunday)
             {
                 offsetDays = -(int)date.DayOfWeek + 1;
             }
@@ -83,7 +83,7 @@ namespace TemperatureModuleDatasource
             var temperatures = await helper.GetTemperaturesAsync(inputs);
             return temperatures;
         }
-        
+
         public async Task<IEnumerable<TempratureDTO>> GetMonthAsync(DateTime date)
         {
             var inputs = new API_Inputs()

@@ -30,25 +30,25 @@ namespace TemperatureModuleDatasourceHelper
 
         private async Task<string> GetResponseAsync(string url)
         {
-            
 
-                //var baseAdress = new Uri("https://widdev.wideco.se/WiDetect/XTool_ISAPI.dll/datasnap/rest/TServerMethods1/GetUnitsData?");
-                //client.BaseAddress = baseAdress;
-                HttpResponseMessage response = await client.GetAsync(url);
-                
 
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseString = await response.Content.ReadAsStringAsync();
+            //var baseAdress = new Uri("https://widdev.wideco.se/WiDetect/XTool_ISAPI.dll/datasnap/rest/TServerMethods1/GetUnitsData?");
+            //client.BaseAddress = baseAdress;
+            HttpResponseMessage response = await client.GetAsync(url);
 
-                    return responseString;
-                }
-                else
-                {
-                    throw new HttpRequestException();
-                }
+
+            if (response.IsSuccessStatusCode)
+            {
+                string responseString = await response.Content.ReadAsStringAsync();
+
+                return responseString;
             }
-        
+            else
+            {
+                throw new HttpRequestException();
+            }
+        }
+
 
         public async Task<TempratureDTO> GetTemperatureAsync(API_Inputs inputs)
         {
@@ -56,8 +56,8 @@ namespace TemperatureModuleDatasourceHelper
             var response = await GetResponseAsync(requestURL);
 
             Queue<TempratureDTO> temperatures = JsonConvert.DeserializeObject<Queue<TempratureDTO>>(response);
-            
-            if(temperatures.Count == 1)
+
+            if (temperatures.Count == 1)
             {
                 return temperatures.Dequeue();
             }
@@ -67,7 +67,7 @@ namespace TemperatureModuleDatasourceHelper
             }
         }
 
-        public async Task<IEnumerable<TempratureDTO>> GetTemperaturesAsync (API_Inputs inputs)
+        public async Task<IEnumerable<TempratureDTO>> GetTemperaturesAsync(API_Inputs inputs)
         {
             var requestURL = GetRequestURL(inputs);
             var response = await GetResponseAsync(requestURL);
