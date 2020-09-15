@@ -23,7 +23,6 @@ namespace TempraturModul.Models
             }
             else
             {
-#warning Testing value
                 returnString = returnString + "DevEui=" + "0018B22000003CC4";
             }
 

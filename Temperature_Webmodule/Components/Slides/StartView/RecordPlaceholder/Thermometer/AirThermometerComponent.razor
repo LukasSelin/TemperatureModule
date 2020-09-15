@@ -1,4 +1,4 @@
-﻿@namespace TemperatureModule.Webpage.Components.Slides.StartView.RecordPlaceholder.Termometers
+﻿@namespace TemperatureModule.Webpage.Components.Slides.StartView.RecordPlaceholder.Thermometer
 
 @using TemperatureModule.Webpage.Models
 @inject IJSRuntime jsRuntime
@@ -7,9 +7,9 @@
 
 <div id="wrapper">
     <div id="termometer">
-        <div id="water-latestTemperature" style="height:0" data-value="@temperatureUnit.Latest.DataPTValue"></div>
-        <div id="water-highestTemperature" style="height:0" data-value="@temperatureUnit.Highest.DataPTValue"></div>
-        <div id="water-lowestTemperature" style="height:0" data-value="@temperatureUnit.Lowest.DataPTValue"></div>
+        <div id="air-latestTemperature" style="height:0" data-value="@temperatureUnit.Latest.DataPTValue"></div>
+        <div id="air-highestTemperature" style="height:0" data-value="@temperatureUnit.Highest.DataPTValue"></div>
+        <div id="air-lowestTemperature" style="height:0" data-value="@temperatureUnit.Lowest.DataPTValue"></div>
 
         <div id="graduations"></div>
     </div>
@@ -26,7 +26,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await jsRuntime.InvokeAsync<object>("waterTemperature",
+        await jsRuntime.InvokeAsync<object>("airTemperature",
             temperatureUnit.Latest.DataPTValue, temperatureUnit.Highest.DataPTValue, temperatureUnit.Lowest.DataPTValue);
     }
 }

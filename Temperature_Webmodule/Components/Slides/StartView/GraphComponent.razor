@@ -21,7 +21,7 @@
     private LineConfig _lineChartConfig;
     private ChartJsLineChart _lineChartJs;
 
-    protected async override Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         _lineChartConfig = new LineConfig()
         {
@@ -36,7 +36,7 @@
                 Scales = new Scales
                 {
                     xAxes = new List<CartesianAxis>
-        {
+    {
                         new TimeAxis
                         {
                             ScaleLabel = new ScaleLabel
@@ -47,11 +47,11 @@
                             Time = new ChartJs.Blazor.ChartJS.Common.Time.TimeOptions
                             {
                                 DisplayFormats = ChartJs.Blazor.ChartJS.Common.Time.TimeDisplayFormats.DE_CH
-                            }
+    }
                         }
                     },
                     yAxes = new List<CartesianAxis>
-            {
+        {
                         new LinearCartesianAxis
                         {
                             ScaleLabel = new ScaleLabel
@@ -72,7 +72,7 @@
         };
     }
 
-    protected override async Task OnParametersSetAsync()
+    protected override void OnParametersSet()
     {
         _lineChartConfig.Data.Datasets.Clear();
 

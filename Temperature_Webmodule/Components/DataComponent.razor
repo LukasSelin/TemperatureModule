@@ -6,6 +6,8 @@
 @using TemperatureModule.Webpage.Components.DataControllPanel
 @using TemperatureModule.Webpage.Components.Slides
 
+@inject HttpClient client
+
 
 <link rel="stylesheet" href="css/myown/Data.css">
 @if(UnitData != null)
@@ -25,23 +27,23 @@ else
 @code {
     public UnitData[] UnitData { get; set; }
 
-    private Datasource _data;
+    private Datasource _datasource;
 
     public async Task DateUpdated(DateRange dateRange)
     {
-        UnitData = (await _data.GetDaysAsync(dateRange.Start.DateTime, dateRange.End.DateTime)).ToArray();
+        UnitData = (await _datasource.GetDaysAsync(dateRange.Start.DateTime, dateRange.End.DateTime)).ToArray();
     }
 
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnInitializedAsync()
     {
         try
         {
-            _data = new Datasource(new HttpClient());
-            UnitData = (await _data.GetDayAsync(DateTime.Now)).ToArray();
+            _datasource = new Datasource(client);
+            UnitData = (await _datasource.GetDayAsync(DateTime.Now)).ToArray();
         }
-        catch
+        catch (Exception e)
         {
-            throw new HttpRequestException("Error when gathering data");
+            throw new Exception(e.Message);
         }
     }
 }

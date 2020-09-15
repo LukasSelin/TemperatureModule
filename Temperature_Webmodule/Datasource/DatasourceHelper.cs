@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,18 +13,16 @@ namespace TemperatureModuleDatasourceHelper
     public class DatasourceHelper
     {
         private static string baseUrl = "https://localhost:44375/WiDetect/XTool_ISAPI.dll/datasnap/rest/TServerMethods1/GetUnitsData?";
-#warning exposed baseURL 
 
         private readonly HttpClient client;
         public DatasourceHelper(HttpClient client)
-        {
-#warning authorization is visable in plain text
-            client.DefaultRequestHeaders.Add("Authorization", "Basic " + "bXdlOg==");
+        { 
             this.client = client;
         }
+
         private string GetRequestURL(API_Inputs inputs)
         {
-            string requestUrl = baseUrl + inputs.ToString();
+            string requestUrl = client.BaseAddress + inputs.ToString();
 
             return requestUrl;
         }

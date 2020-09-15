@@ -12,9 +12,9 @@
 
     <div class="filter">
         <DateRangePicker class="dateRangePicker" placeholder="@StartDate.GetValueOrDefault().DateTime.ToShortDateString()"
-                         ShowOnlyOneCalendar="true" StartDate="StartDate" EndDate="EndDate" OnRangeSelect="OnDateSelected" />
+                         ShowOnlyOneCalendar="true" StartDate="StartDate" EndDate="EndDate" OnRangeSelect="DateRangeUpdated" />
         <div class="dropdown">
-            <DropdownFilterComponent Tip="@dropdownTip" Filters="filterList" SelectUpdated="OnSelected" />
+            <DropdownFilterComponent Tip="@dropdownTip" Filters="filterList" SelectUpdated="FilterUpdated" />
         </div>
     </div>
 </div>
@@ -31,16 +31,18 @@
 
     private string dropdownTip { get; set; }
 
-    public async Task OnSelected(FilterEnum filter)
+    public async Task FilterUpdated(FilterEnum filter)
     {
-        var range = FilterEnumHelper.GetDateRange(filter);
         dropdownTip = filterList[(int)filter];
+
+        var range = FilterEnumHelper.GetDateRange(filter);
         StartDate = range.Start;
         EndDate = range.End;
+
         await DateUpdated.InvokeAsync(range);
     }
 
-    public async Task OnDateSelected(DateRange range)
+    public async Task DateRangeUpdated(DateRange range)
     {
         dropdownTip = "Custom date";
         StartDate = range.Start;
@@ -49,7 +51,7 @@
         await DateUpdated.InvokeAsync(range);
     }
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         dropdownTip = filterList[0];
     }
