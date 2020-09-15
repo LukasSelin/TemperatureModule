@@ -12,8 +12,6 @@ namespace TemperatureModuleDatasourceHelper
 {
     public class DatasourceHelper
     {
-        private static string baseUrl = "https://localhost:44375/WiDetect/XTool_ISAPI.dll/datasnap/rest/TServerMethods1/GetUnitsData?";
-
         private readonly HttpClient client;
         public DatasourceHelper(HttpClient client)
         { 
